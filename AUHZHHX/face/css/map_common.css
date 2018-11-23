@@ -1,0 +1,177 @@
+/*-------------------  地图导航样式  ------------------------*/
+.mapContainer,
+.mapContainer>div,
+.map-line>div{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.mapContainer img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/**
+ * 地图路线样式
+ */
+.map-line{
+	z-index: 2;
+}
+.map-line-con .lineArrow{
+	width: 0.2rem;
+	height: 0.2rem;
+	background: url(../img/index/lineArrow.png);
+	background-size: 100% 100%;
+	position: absolute;
+	-webkit-transition: .5s all ease;
+}
+
+/**
+ * 障碍物样式
+ */
+.fence-con .fencePoint{
+	position: absolute;
+	border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .4);
+    box-sizing: border-box;
+    transform: translate(-50%, -50%);
+}
+.fencePoint.path {
+    background-color: #57e700;
+}
+
+
+
+/**
+ * 机场设施样式
+ */
+.airport-facilities{
+	z-index: 3;
+}
+.airport-facilities .action{
+	width: 0.4rem;
+	height: 0.5rem;
+	background-size: 100% 100%;
+	position: absolute;
+	transform: translate(-50%, -83%);
+}
+.airport-facilities .toilet{
+	background-image: url(../img/facilities_icon/toilet.png);
+}
+.airport-facilities .elevator{
+	background-image: url(../img/facilities_icon/dianti.png);
+}
+.airport-facilities .escalator{
+	background-image: url(../img/facilities_icon/futi.png);
+} 
+.airport-facilities .checkCount{
+	background-image: url(../img/facilities_icon/checkCount.png);
+}
+.airport-facilities .securityCheck{
+	background-image: url(../img/facilities_icon/securityCheck.png);
+}
+.airport-facilities .baggage{
+	background-image: url(../img/facilities_icon/baggage.png);
+}
+.airport-facilities .lounge{
+	background-image: url(../img/facilities_icon/lounge.png);
+}
+.airport-facilities .maternalRoom{
+	background-image: url(../img/facilities_icon/maternalRoom.png);
+}
+.airport-facilities .smoke{
+	background-image: url(../img/facilities_icon/smoke.png);
+}
+.airport-facilities .water{
+	background-image: url(../img/facilities_icon/water.png);
+}
+.airport-facilities .inquire{
+	background-image: url(../img/facilities_icon/inquire.png);
+}  
+
+
+/**
+ * 登机口、当前位置图标样式
+ */
+.map-spot-con{
+	z-index: 10;
+}
+.map-spot{
+	width: 0.7rem;
+	height: 0.7rem;
+	position: absolute;
+	text-align: center;
+	background-size: 100% 100%;
+	color: #fff;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+}
+/*目的点*/
+.gate-spot{
+	line-height: 0.54rem;
+    font-size: 0.3rem;
+	background-image: url(../img/facilities_icon/djk.png);
+	/*-webkit-animation: destStatus 1s infinite;*/
+}
+@-webkit-keyframes destStatus{
+	0% {
+		opacity: 1;
+		/*box-shadow: 0 0 0.8rem 0.1rem rgba(218, 19, 46, .9);*/
+	}
+	50% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+/*当前点*/
+.now-spot{
+	-webkit-animation: nowStatus 1s infinite;
+}
+@-webkit-keyframes nowStatus{
+	0% {
+		/*box-shadow: 0 0 0.8rem 0.1rem rgba(246,124,16, .9);*/
+		background-image: url(../img/index/range_big.png);
+		opacity: 0.9;
+	}
+	50% {
+		background-image: none;
+		opacity: 1;
+	}
+	100% {
+		background-image: url(../img/index/range_big.png);
+		opacity: 0.9;
+	}
+}
+
+/**
+ * 保存、清空按钮
+ */
+.save-clear-btn{
+	width: 1.2rem;
+    height: 0.64rem;
+    font-size: 0.3rem;
+    line-height: 0.64rem;
+    text-align: center;
+    position: absolute;
+    top: 20px;
+    z-index: 999;
+    background: green;
+    border: 1px solid green;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.map-save{
+	left: 20px;
+}
+.map-del{
+	right: 20px;
+}

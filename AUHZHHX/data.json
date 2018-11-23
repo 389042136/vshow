@@ -1,0 +1,17 @@
+{
+    "code": 0,
+    "message": "请求处理成功",
+    "data2": null,
+    "data": [
+        {
+            "faceId": 20180926000000009,
+            "customId": null,
+            "name": "HU XIAO DONG-1A",
+            "sex": null,
+            "certNo": "610481199109290132",
+            "score": 0.9,
+            "seatNo": "6B"
+        }
+    ],
+    "error": []
+}

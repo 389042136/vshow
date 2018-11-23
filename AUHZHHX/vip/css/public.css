@@ -1,0 +1,140 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body, #app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+img {
+	display: block;
+}
+
+/**
+ * 动画统一属性
+ */
+
+.isAniamted {
+	animation-iteration-count: infinite; /*次数*/
+	animation-timing-function: linear;	/*匀速*/
+    animation-name: repeatRolling;
+}
+
+@keyframes repeatRolling {
+	0% {
+    	margin-left: 0;
+		transform: translateX(0.2rem);
+	}
+
+	50% {
+        margin-left: calc(100% - 0.2rem);
+		transform: translateX(-100%);
+	}
+
+	100% {
+        margin-left: 0;
+		transform: translateX(0.2rem);
+	}
+}
+
+/**
+ * flex 布局
+ */
+
+[class*="flex"] {
+    display: flex;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-j-center {
+    justify-content: center;
+}
+
+.flex-j-right {
+    justify-content: flex-end;
+}
+
+.flex-j-between {
+    justify-content: space-between;
+}
+
+.flex-j-around {
+    justify-content: space-around;
+}
+
+.flex-a-center {
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+
+/**
+ * 初始化滚动条
+ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-button {
+    height: 0px;
+    width: 0;
+    background-color: transparent;
+    opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4B5473;
+    -webkit-border-radius: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #101318;
+}
+
+
+
+/**
+ * 样式类
+ */
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tr {
+    text-align: right;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.border {
+    border: 1px solid #DCDFE6;
+    border-radius: 10px;
+}

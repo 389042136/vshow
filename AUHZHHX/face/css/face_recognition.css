@@ -1,0 +1,796 @@
+body {
+	background: url('../img/index/face_v_bg_big.png');
+	background-size: 100% 100%;
+}
+
+.content {
+	margin: 0 auto;
+	width: 9.5rem;
+	color: #fff;
+}
+
+/*顶部*/
+.face-top {
+	display: flex;
+	justify-content: space-between;
+	margin: 0.3rem -0.3rem 0.1rem;
+	height: 1.1rem;
+}
+
+.face-logo img {
+	display: block;
+	width: 5.4rem;
+	transform: translateY(-0.1rem);
+}
+
+.face-title-ch {
+	font-size: 0.48rem;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.face-title-en {
+	font-size: 0.18rem;
+	letter-spacing: 1px;
+}
+
+.face-time-1 {
+	font-size: 0.7rem;
+	text-align: right;
+}
+
+.face-time-2 .week {
+	margin-left: 0.15rem;
+}
+
+.face-time-2 {
+	font-size: 0.32rem;
+}
+
+
+/*时钟，广告区域*/
+.mbody .header {
+	display: flex;
+	height: 4.3rem;
+	transform: translateY(-0.2rem);
+}
+
+.mbody .header-left {
+	font-size: 0;
+}
+
+/* 时钟 */
+#clock {
+	height: 4.6rem;
+	width: 4.6rem;
+	position: relative;
+	left: 0;
+	border-radius: 50%;
+	background: url("../img/index/clock1.png") no-repeat;
+	background-size: 100% 100%;
+}
+
+#clock div {
+	position: absolute;
+}
+
+#clock div img{
+	width: 100%;
+	height: 100%;
+}
+
+#clock img[src*="second"] {
+	transition: transform 600000s linear 1s;
+}
+
+#clock:target img[src*="second"] {
+	transform: rotate(3600000deg);
+}
+
+#clock img[src*="minute"] {
+	transition: transform 360000s linear 0s;
+}
+
+#clock:target img[src*="minute"] {
+	transform: rotate(36000deg);
+}
+
+#clock img[src*="hour"] {
+	transition: transform 216000s linear 0s;
+}
+
+#clock:target img[src*="hour"] {
+	transform: rotate(360deg);
+}
+
+#hour {
+    width: 0.58rem;
+    height: 2.02rem;
+	left: 2.01rem;
+    top: 1.32rem;
+}
+
+#minute, #second {
+	width: 0.38rem;
+	height: 4.6rem;
+	left: 2.11rem;
+}
+
+.hight_light {
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url("../img/index/hight_light.png") no-repeat;
+	background-size: 100% 100%;
+	z-index: 1;
+}
+
+.header-right {
+	transform: translateX(-0.2rem);
+	padding-top: 0.6rem;
+}
+
+.header-right img {
+	width: 5.2rem;
+	height: 3.5rem;
+}
+
+
+
+/*中间视频区域*/
+.faceVideo {
+	width: 100%;
+	font-size: 0.5rem;
+	text-align: center;
+	border-radius: 0.3rem;
+	overflow: hidden;
+	box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, .4);
+}
+
+.faceVideo-top {
+	height: 1.4rem;
+	background: url('../img/index/video_top.png');
+	background-size: 100% 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	letter-spacing: 0.03rem;
+}
+
+.faceVideo-top-ch {
+	font-size: 0.54rem;
+	font-weight: bold;
+}
+
+.faceVideo-top-en {
+	font-size: 0.28rem;
+}
+
+#cloudwalkwebobj {
+	width: 100%;
+	height: 7rem;
+}
+
+.faceVideo-bottom {
+	height: 3.5rem;
+	background: url('../img/index/video_bottom.png');
+	background-size: 100% 100%;
+}
+
+.faceVideo-bottom-1 {
+	font-size: 0.3rem;
+	line-height: 0.8rem;
+}
+
+.faceVideo-bottom-2 {
+	display: flex;
+	margin-top: 1.6rem;
+}
+
+.faceVideo-bottom-2>div {
+	flex: 1;
+	padding: 0 0.2rem;
+}
+
+.faceVideo-bottom-ch {
+	font-size: 0.28rem;
+	letter-spacing: 0.02rem;
+	white-space: normal;
+	line-height: 0.4rem;
+}
+
+.faceVideo-bottom-en {
+	margin-top: 0.05rem;
+	font-size: 0.16rem;
+}
+
+
+/**
+ * 自由文本动画
+ */
+.free_text {
+	height: 0.81rem;
+	padding: 0 0.18rem;
+	font-size: 0.45rem;
+}
+
+.free_text .left img {
+	width: 0.63rem;
+	height: 0.63rem;
+}
+
+.free_text .left {
+	margin-right: 0.2rem;
+}
+
+/*光标*/
+.moveSign {
+	width: 0.9rem;
+	height: 0.45rem;
+}
+
+
+
+
+/**********************************************************
+ 						人脸识别 
+ **********************************************************/
+#face-recognition {
+	position: absolute;
+	top: 0;
+	z-index: 9;
+	width: 100%;
+	height: calc(100% - 0.81rem);
+	padding-top: 1.5rem;
+	background: url('../img/index/main_bg_v.png');
+	background-size: 100% 100%;
+	color: #fff;
+	letter-spacing: 0.02rem;
+	display: none;
+}
+
+#face-recognition.dialogShow {
+	display: block;
+}
+
+
+/**
+ * 多人、单人共同属性
+ */
+.manyPassenger {
+	display: none;
+	height: 100%;
+}
+
+.isMany .onePassenger {
+	display: none;
+}
+
+.isMany .manyPassenger {
+	display: block;
+}
+
+/**
+ * 图片设置
+ */
+.fvt-img img,
+.via-flight-img img,
+.noHasVia img,
+.passenger-img img {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+/**
+ * 单人样式
+ */
+.onePassenger .passenger-flightData {
+	margin: 0 auto;
+	width: 9rem;
+	height: 8.6rem;
+	background-image: url(../img/index/bg_passenger_info_blue.png);
+	background-size: 100% 100%;
+	position: relative;
+}
+
+.onePassenger .passenger-flightData.lastCall {
+	background-image: url('../img/index/bg_passenger_info_red.png');
+}
+
+.onePassenger .passenger-flightData.boarding {
+	background-image: url('../img/index/bg_passenger_info_yellow.png');
+}
+
+.onePassenger .passenger-img {
+	width: 3rem;
+	height: 3rem;
+	overflow: hidden;
+	position: absolute;
+	left: 0.4rem;
+	top: -1.2rem;
+	display: flex;
+}
+
+.onePassenger .passenger-name {
+	font-size: 0.62rem;
+	margin-left: 3.2rem;
+	margin-right: 0.8rem;
+	height: 1.6rem;
+}
+
+.passenger-name {
+	display: -webkit-box;
+    -webkit-box-align: center;
+	-webkit-box-pack: end;
+	font-weight: bold;
+	letter-spacing: 0.05rem;
+	-webkit-mask-image: linear-gradient(to right,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 1) 0.1rem,
+		rgba(0, 0, 0, 1) calc(100% - 0.1rem),
+		rgba(0, 0, 0, 0) 100%);
+}
+
+.onePassenger .flight-time {
+	color: #95b3bb;
+	font-size: 0.3rem;;
+	text-align: center;
+	line-height: 0.6rem;
+}
+
+.flight-time .week {
+	margin-left: 0.1rem;
+}
+
+/**
+ * 航班信息
+ */
+.onePassenger .boarding-info {
+	height: 1.8rem;
+	padding: 0 0.8rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 0.74rem;
+	font-weight: bold;
+}
+
+.onePassenger .passenger-flightNo {
+	margin-left: 0.3rem;
+	margin-right: 0.7rem;
+}
+
+.passenger-gates {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.gates-left {
+	margin-right: 0.2rem;
+	font-weight: normal;
+	text-align: right;
+}
+
+.onePassenger .gates-left>p:nth-child(1) {
+	font-size: 0.56rem;
+}
+
+.onePassenger .gates-left>p:nth-child(2) {
+	font-size: 0.2rem;
+}
+
+/**
+ * 始发/经停/目的
+ */
+.onePassenger .from-to-div {
+	display: -webkit-box;
+	-webkit-box-align: center;
+	-webkit-box-pack: center;
+	text-align: center;
+	height: 3rem;
+	margin: 0 0.7rem;
+	padding: 0 0.1rem;
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(to right,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 1) 0.1rem,
+		rgba(0, 0, 0, 1) calc(100% - 0.1rem),
+		rgba(0, 0, 0, 0) 100%);
+}
+
+.from-via-to {
+	display: flex;
+	align-items: center;
+}
+
+.onePassenger .from-via-to .place-en {
+	font-size: 0.3rem;
+}
+
+.onePassenger .from-via-to .place-ch {
+	font-size: 0.6rem;
+	font-weight: bold;
+	margin: 0.1rem 0 0.2rem;
+}
+
+.onePassenger .fvt-time-div>div {
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 0.2rem;
+	font-size: 0.34rem;
+	background: url(../img/index/bg_time.png);
+	background-size: 100% 100%;
+	width: 1.8rem;
+	line-height: 0.58rem;
+	border-radius: 0.28rem;
+}
+
+.onePassenger .fvt-img {
+	width: 0.4rem;
+	height: 0.4rem;
+	margin-right: 0.1rem;
+}
+
+.onePassenger .fvt-time-div {
+	padding-bottom: 0.05rem;
+}
+
+.hasVia {
+	display: flex;
+	align-items: center;
+}
+
+.onePassenger .via-flight-img {
+	width: 0.5rem;
+	height: 0.5rem;
+	transform: translateY(-0.1rem);
+}
+
+.onePassenger .via-flight {
+	margin: 0 0.4rem;
+}
+
+.onePassenger .noHasVia {
+	display: none;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin: 0.2rem 0.3rem;
+}
+
+.noVia.via-div .hasVia {
+	display: none;
+}
+
+.noVia.via-div .noHasVia {
+	display: block;
+}
+
+/**
+ * 航班状态
+ */
+.onePassenger .flight-status-div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 1.6rem;
+}
+
+.onePassenger .flight-status-img {
+	width: 1.2rem;
+	height: 1.2rem;
+	margin-right: 0.1rem;
+}
+
+.onePassenger .flight-status-img img {
+	width: 100%;
+	height: 100%;
+}
+
+.onePassenger .flight-status-ch {
+	font-size: 0.7rem;
+	font-weight: bold;
+}
+
+.onePassenger .flight-status-en {
+	font-size: 0.3rem;
+}
+
+
+/**
+ * 距离登机口地图
+ */
+.toGateMap {
+	width: 9rem;
+	height: 7.2em;
+	border-radius: 0.3rem;
+	overflow: hidden;
+	margin: 6% auto 0.5rem;
+	background: #EBF6FA;
+	border: 2px solid #1E444D;
+}
+
+/*地图标题*/
+.toGateMap .map-tittle-div {
+	width: 100%;
+	height: 1.2rem;
+	background-image: url(../img/index/bg_map_title.png);
+	background-color: #90DEF7;
+	background-size: 100% 100%;
+	padding: 0.15rem 0.4rem;
+	display: flex;
+	flex-wrap: wrap;
+	color: #fff;
+	z-index: 10;
+	font-size: 0.24rem;
+	/*-webkit-mask-image: linear-gradient(to bottom,rgba(0, 0, 0, 1) calc(100% - 3px), rgba(0, 0, 0, 0) 100%);*/
+}
+
+.map-tittle-child {
+	display: flex;
+	align-items: center;
+	width: 25%;
+}
+
+.map-tittle-child:nth-child(3),
+.map-tittle-child:nth-child(7) {
+	width: 20%;
+}
+
+.map-tittle-child:last-child {
+	width: 30%;
+}
+
+.map-place-sign {
+	width: 0.4rem;
+	height: 0.4rem;
+	border-radius: 50%;
+	margin-right: 0.05rem;
+}
+
+.map-place-sign img {
+	width: 100%;
+	height: 100%;
+}
+
+/*地图导航容器样式 */
+.mapCon {
+	width: 100%;
+	height: calc(100% - 1.2rem);
+	overflow: hidden;
+	position: relative;
+	box-shadow: 0px 10px 10px rgba(0, 0, 0, .2);
+}
+
+
+
+
+/**
+ * 多人样式
+ */
+.manyPassenger>div {
+	min-height: 95%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.manyPassenger .passenger-flightData {
+	width: 9rem;
+	margin: 0 auto;
+	height: 4.1rem;
+	padding: 0 0.5rem;
+	background-image: url('../img/index/bg_muilty_blue.png');
+	background-size: 100% 100%;
+	position: relative;
+	margin-bottom: 15%;
+}
+
+.manyPassenger .passenger-flightData.lastCall {
+	background-image: url('../img/index/bg_muilty_red.png');
+}
+
+.manyPassenger .passenger-flightData.boarding {
+	background-image: url('../img/index/bg_muilty_yellow.png');
+}
+
+.manyPassenger .passenger-img {
+	width: 2.5rem;
+	height: 2.5rem;
+	position: absolute;
+	top: -1rem;
+	left: 0.2rem;
+}
+
+.manyPassenger .passenger-name {
+	font-size: 0.56rem;
+	margin-left: 2.2rem;
+	height: 1.1rem;
+	transform: translateY(0.2rem);
+}
+
+
+.manyPassenger .boarding-info {
+	height: 1.7rem;
+	display: flex;
+	align-items: center;
+}
+
+.manyPassenger .passenger-flightNo {
+	width: 2.7rem;
+	padding-top: 0.14rem;
+}
+
+.p-flightNo {
+	font-size: 0.48rem;
+	font-weight: bold;
+	letter-spacing: 0.03rem;
+}
+
+.p-flightNo-time {
+	font-size: 0.28rem;
+	letter-spacing: 0.03rem;
+	margin-top: 0.05rem;
+}
+
+.manyPassenger .from-to-div {
+	flex: 1;
+	height: 100%;
+	text-align: center;
+	padding: 0 0.1rem;
+	display: -webkit-box;
+	/* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+	-webkit-box-align: center;
+	-webkit-box-pack: end;
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(to right,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 1) 0.1rem,
+		rgba(0, 0, 0, 1) calc(100% - 0.1rem),
+		rgba(0, 0, 0, 0) 100%);
+}
+
+.manyPassenger .place-en {
+	font-size: 0.24rem;
+}
+
+.manyPassenger .place-ch {
+	font-size: 0.48rem;
+}
+
+.manyPassenger .via-flight-img,
+.manyPassenger .noHasVia {
+	width: 0.5rem;
+	height: 0.5rem;
+	margin: 0 0.2rem;
+}
+
+.manyPassenger .noHasVia {
+	display: none;
+}
+
+.manyPassenger .place-ch {
+	font-weight: bold;
+}
+
+.manyPassenger .flight-status-div {
+	height: 1.3rem;
+	font-size: 0.48rem;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+}
+
+.manyPassenger .flight-status {
+	display: -webkit-box;
+	/* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+	-webkit-box-align: center;
+	flex: 1;
+	padding: 0 0.1rem;
+	overflow: hidden;
+	height: 100%;
+	-webkit-mask-image: linear-gradient(to right,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 1) 0.1rem,
+		rgba(0, 0, 0, 1) calc(100% - 0.1rem),
+		rgba(0, 0, 0, 0) 100%);
+}
+
+
+.manyPassenger .gates-left>p:nth-child(2) {
+	font-size: 0.18rem;
+}
+
+
+/**
+ * 双人旅客信息
+ */
+.twoPassenger .passenger-flightData {
+	height: 5.5rem;
+}
+
+.twoPassenger .passenger-img {
+	width: 3.5rem;
+	height: 3.5rem;
+	top: -1.4rem;
+	left: 0.1rem;
+}
+
+.twoPassenger .passenger-name {
+	font-size: 0.6rem;
+	height: 1.6rem;
+	margin-left: 2.9rem;
+	transform: translateY(0.1rem);
+}
+
+.twoPassenger .boarding-info {
+	height: 2.3rem;
+}
+
+.twoPassenger .passenger-flightNo {
+	width: 3rem;
+	padding-top: 0;
+}
+
+.twoPassenger .p-flightNo {
+	font-size: 0.68rem;
+}
+
+.twoPassenger .p-flightNo-time {
+	font-size: 0.34rem;
+}
+
+.twoPassenger .place-en {
+	font-size: 0.34rem;
+}
+
+.twoPassenger .place-ch {
+	font-size: 0.56rem;
+}
+
+.twoPassenger .noHasVia {
+	width: 0.6rem;
+	height: 0.6rem;
+}
+
+.twoPassenger .flight-status-div {
+	height: 1.5rem;
+	font-size: 0.58rem;
+}
+
+
+/**
+ * 关闭页面倒计时
+ */
+/*单人*/
+.countdown {
+	font-size: 0.3rem;
+	color: #fff;
+	background: url('../img/index/bg_time.png');
+	background-size: 100% 100%;
+	line-height: 0.6rem;
+	border-radius: 0.3rem;
+	text-align: center;
+	position: absolute;
+	bottom: 0.6rem;
+	right: 1rem;
+	min-width: 0.9rem;
+	padding: 0 0.3rem;
+}
+
+/*多人*/
+.isMany .countdown {
+	bottom: 0.2rem;
+	left: 50%;
+	right: auto;
+	transform: translateX(-50%);
+	color: #60777c;
+}
+
+.countdown-time {
+	color: #fff;
+	font-weight: bold;
+}

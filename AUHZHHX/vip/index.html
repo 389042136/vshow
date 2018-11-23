@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="pragma" content="no-cache"> 
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
+	<meta http-equiv="expires" content="0">
+	<title>VIP（横屏）</title>
+	<link href="../lib/img/favicon.ico" rel="shortcut icon" />
+	
+	<!-- 第三方css、js -->
+	<link rel="stylesheet" type="text/css" href="../lib/css/animate.min.css"/>
+	<script src="../lib/js/jquery-1.12.3.min.js"></script>
+	<script src="../lib/js/velocity.min.js"></script>
+	<script src="../lib/js/vue.min.js"></script>
+	<script src="../lib/js/common.js"></script>
+	
+	<!-- 自定义css、js -->
+	<link rel="stylesheet" type="text/css" href="./css/public.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/index.css"/>
+	<script src="../config/config.js"></script>
+	
+	<!-- 设置根目录字体大小，值越大字越小 -->
+	<script>common.initRem(1920);</script>
+</head>
+<body>
+<div id="app" @click="isRelevantPass = false" v-cloak>
+	<!--Top-->
+	<div class="index-top flex-j-between flex-a-center">
+        <!-- tittle -->
+        <div class="tittle flex-a-center">
+            <img src="./img/index/logo_vip.png">
+            <div>
+                <!-- <p class="ch">旅客服务平台</p> -->
+                <p class="en">VIP PASSENGER SERVICE PLATFORM</p>
+            </div>
+        </div>
+
+        <!-- 时间 -->
+        <div class="common-time">
+            <div class="time blod">{{indexTop.time}}</div>
+            <div class="date flex-j-between">
+                <span>{{indexTop.date}}</span>
+                <span>{{indexTop.week}}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!--mid-->
+    <div class="index-mid flex-j-between">
+    	<!--抓拍人脸-->
+		<div id="cloudwalkwebobj"></div>
+		
+		<span class="new-pass">Latest entry passengers</span>
+		<div class="mid-right">
+			<template v-if="passengerData.length > 0">
+				<template v-for="(item, index) in passengerData" :key="index">
+					<div class="info-child flex-j-between">
+						<img :src="item.img"/>
+						<div class="info-child-right">
+							<div class="info-top flex-a-center">
+								<div class="name flex-a-center font-bold">
+									<div class="isAniamted">{{ item.name_c }}</div>
+								</div>
+								<img src="img/index/sign_vip_bigger.png" class="vip-img"/>
+								<div class="birthday flex-a-center" v-if="v.isBirthday(item.IDCard)">
+									<img src="img/index/sign_cake.png" alt="" />
+								</div>
+							</div>
+							<div class="info-flight flex">
+								<div class="flightNo">
+									<div class="info-flight-tittle">FlightNo</div>
+									<div class="info-flight-con">{{ item.flight_no }}</div>
+								</div>
+								<div class="tc">
+									<div class="info-flight-tittle">Seat</div>
+									<div class="info-flight-con">{{ item.seat }}</div>
+								</div>
+								<div class="tc">
+									<div class="info-flight-tittle">Gate</div>
+									<div class="info-flight-con">{{ item.gates }}</div>
+								</div>
+								<div class="tc">
+									<div class="info-flight-tittle">Time</div>
+									<div class="info-flight-con">{{ item.p_time }}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</template>
+			</template>
+			<div class="text-noData" v-else>No passengers in the room</div>
+		</div>
+    </div>
+    
+    <!--旅客信息提示框-->
+    <transition
+    	name="bounce"
+	  	enter-active-class="bounceInRight"
+	  	leave-active-class="bounceOutRight">
+    	<div class="dialogPass flex-j-center animated"
+	  		@mouseenter="v.pauseNotice()"
+	  		@mouseleave="v.startNotice()"
+			v-show="isDialogPass"
+			:class="{dialogNoPass: dialogPassData.score < config.faceScore}"
+			@click.stop>
+	  		<div class="contain" :class="{isBirthday: v.isBirthday(dialogPassData.IDCard)}">
+			    <img class="donut-front" :src="dialogPassData.img"/>
+			    <img class="donut-back" src="img/index/pic_big_cake.png"/>
+			 </div>
+			<div class="info-child-right hasPass">
+				<div class="info-top flex-a-center">
+					<div class="name flex-a-center font-bold">
+						<div class="isAniamted">{{ dialogPassData.name_c }}</div>
+					</div>
+					<img src="img/index/sign_vip_bigger.png" class="vip-img"/>
+				</div>
+				<div class="welcome">Welcome to the VIP lounge</div>
+				<div class="info-flight flex">
+					<div>
+						<div class="info-flight-tittle">FlightNo</div>
+						<div class="info-flight-con">{{ dialogPassData.flight_no }}</div>
+					</div>
+					<div class="tc">
+						<div class="info-flight-tittle">Seat</div>
+						<div class="info-flight-con">{{ dialogPassData.seat }}</div>
+					</div>
+					<div class="tc">
+						<div class="info-flight-tittle">Gate</div>
+						<div class="info-flight-con">{{ dialogPassData.gates }}</div>
+					</div>
+					<div class="tc">
+						<div class="info-flight-tittle">Time</div>
+						<div class="info-flight-con">{{ dialogPassData.p_time }}</div>
+					</div>
+				</div>
+				<div class="tr time">
+					<span @click="v.stopNotice(dialogPassData.IDCard)">
+						No more prompts within {{ config.noNoticeTime }} minutes
+					</span>
+				</div>
+			</div>
+
+			<!-- 无旅客信息 -->
+			<div class="info-child-right noHasPass">
+				Not VIP, Can't Enter!
+			</div>
+    	</div>
+	</transition>
+
+	<!--登机信息-->
+	<transition
+    	name="fade"
+	  	enter-active-class="fadeInUp"
+	  	leave-active-class="fadeOutDown">
+		<div class="boarding flex-a-center animated" v-show="boarding.flight_no">
+			<img :src="flightLogo" onerror="this.src='../lib/img/logo/logo_default.png'"/>
+			<div class="mid">
+				<div class="boarding-info">
+					<span>{{ boarding.flight_no }}</span>will board at <span>{{ boarding.p_time }}</span>, gate<span>{{ boarding.gates }}</span>
+				</div>
+				<div class="relevantVIP">Please pay attention to the relevant VIP passengers to prepare for boarding!</div>
+			</div>
+			<div class="vip-btn" @click.stop="isRelevantPass = !isRelevantPass">
+				<div>Passenger Location</div>
+				<span class="num" v-show="relevantPass.length">{{ relevantPass.length }}</span>
+			</div>
+		</div>
+	</transition>
+
+	<!--相关旅客-->
+	<transition
+    	name="fade"
+	  	enter-active-class="fadeIn"
+	  	leave-active-class="fadeOut">
+	  	<div class="relevantPass animated" v-show="isRelevantPass" @click.stop>
+	  		<div class="content">
+	  			<template v-if="relevantPass.length > 0">
+					<template v-for="(item, index) in relevantPass" :key="index">
+						<div class="info-child flex-j-between flex-a-center">
+							<img :src="item.img"/>
+							<div class="info-child-right">
+								<div class="info-top flex-a-center">
+									<div class="name flex-a-center font-bold">
+										<div class="isAniamted">{{ item.name_c }}</div>
+									</div>
+									<img src="img/index/sign_vip_bigger.png" class="vip-img"/>
+								</div>
+								<div class="info-flight flex">
+									<div>
+										<div class="info-flight-tittle">Class</div>
+										<div class="info-flight-con">{{ item.space }}</div>
+									</div>
+									<div>
+										<div class="info-flight-tittle">Seat</div>
+										<div class="info-flight-con">{{ item.seat }}</div>
+									</div>
+									<div>
+										<div class="info-flight-tittle">Position</div>
+										<div class="info-flight-con position">{{ item.position }}</div>
+									</div>
+									<div>
+										<div class="info-flight-tittle">Entry time</div>
+										<div class="info-flight-con">{{ item.in_time }}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</template>
+				</template>
+				<div class="text-noData" v-else>No relevant passengers</div>
+			</div>
+			<span class="triangle_border_down"></span>
+	  	</div>
+	</transition>
+</div>
+</body>
+<script src="js/index.js"></script>
+</html>

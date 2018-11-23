@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="pragma" content="no-cache"> 
+	<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
+	<meta http-equiv="expires" content="0">
+	<title>人脸识别竖屏</title>
+	<link href="../lib/img/favicon.ico" rel="shortcut icon" />
+	
+	<!-- 第三方css、js -->
+	<link rel="stylesheet" type="text/css" href="../lib/css/animate.min.css" />
+	<script src="../lib/js/jquery-1.12.3.min.js"></script>
+	<script src="../lib/js/velocity.min.js"></script>
+	<script src="../lib/js/pathfinding-browser.min.js"></script>
+	<script src="../lib/js/vue.min.js"></script>
+	<script src="../lib/js/common.js"></script>
+
+	<!-- 自定义css、js -->
+	<link rel="stylesheet" type="text/css" href="css/public.css" />
+	<link rel="stylesheet" type="text/css" href="css/face_recognition.css" />
+	<link rel="stylesheet" type="text/css" href="css/map_common.css" />
+	<script src="../config/config.js"></script>
+	
+	<!-- 设置根目录字体大小，值越大字越小 -->
+	<script>common.initRem(1000);</script>
+</head>
+<body>
+<div id="vueObj" v-cloak>
+	
+	<!-- 主界面 -->
+	<div class="mbody">
+		<div class="content">
+			<!--顶部-->
+			<div class="face-top">
+				<div class="face-logo">
+					<img :src="'img/' + homeData.airport_tittle + '/airport_tittle.png'" alt="" />
+				</div>
+				<div class="face-time">
+					<p class="face-time-1">{{homeData.shortTime}}</p>
+					<p class="face-time-2">{{homeData.longTime}}<span class="week">{{homeData.week}}</span></p>
+				</div>
+			</div>
+			
+			<!--时钟，广告区域-->
+			<div class="header">
+				<div class="header-left">
+					<div id="clock">
+						<div class="hight_light"></div>
+						<div id="hour" :style="{transform: homeData.clock.hour}"><img src="img/index/hour.png"></div>
+						<div id="minute" :style="{transform: homeData.clock.minute}"><img src="img/index/minute.png"></div>
+						<div id="second" :style="{transform: homeData.clock.second}"><img src="img/index/second.png"></div>
+					</div>
+				</div>
+				<div class="header-right">
+					<img :src="'img/' + homeData.reminderImg.imgSrc" class="animated" :class="{flipInY: homeData.reminderImg.isAnimated}"/>
+				</div>
+			</div>
+			
+			<!--中间视频区域-->
+			<div class="faceVideo">
+				<div class="faceVideo-top">
+					<p class="faceVideo-top-ch">Please look here and smile</p>
+					<!-- <p class="faceVideo-top-en">请看这里并留下您的微笑</p> -->
+				</div>
+				
+				<!--抓拍人脸-->
+				<div id="cloudwalkwebobj"></div>
+				
+				<div class="faceVideo-bottom">
+					<div class="faceVideo-bottom-1">After successful identification, you will see your flight information</div>
+					<div class="faceVideo-bottom-2">
+						<div>
+							<p class="faceVideo-bottom-ch">Keep your face in the window</p>
+							<!-- <p class="faceVideo-bottom-en">保持面部在取景框</p> -->
+						</div>
+						<div>
+							<p class="faceVideo-bottom-ch">Try to avoid facial occlusion</p>
+							<!-- <p class="faceVideo-bottom-en">尽量避免面部遮挡</p> -->
+						</div>
+						<div>
+							<p class="faceVideo-bottom-ch">Up to 3 faces at one time</p>
+							<!-- <p class="faceVideo-bottom-en">最多同时识别三人</p> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--自由文本-->
+		<div class="free_text">
+			<em class="moveSign"></em>
+			<div class="left">
+				<img src="img/index/bottom_icon_inform.png"/>
+			</div>
+			<div class="free_text_mid">
+				<div class="freeTextData"></div>
+			</div>
+		</div>
+	</div>
+	
+	<!--人脸识别-->
+	<div id="face-recognition">
+		
+		<!--单人-->
+		<div class="onePassenger">
+			<!--旅客航班信息-->
+			<div class="passenger-flightData" :class="{boarding: onePassenger.statusCode == 1, lastCall: onePassenger.statusCode == 2}">
+				<!--旅客头像-->
+				<div class="passenger-img">
+					<img :src="onePassenger.flightLogoSrc" onerror="this.src='../lib/img/logo/logo_default.png'"/>
+				</div>
+				
+				<!--旅客姓名-->
+				<div class="passenger-name">
+					<div class="isAniamted">{{onePassenger.name}}</div>
+				</div>
+				
+				<!--航班日期-->
+				<div class="flight-time">
+					Flight Date: 
+					<span v-html="onePassenger.flightTime"></span>
+				</div>
+				
+				<!--航班信息-->
+				<div class="boarding-info">
+					<div class="passenger-flightNo">
+						{{onePassenger.flightNo}}
+					</div>
+					<div class="passenger-gates">
+						<div class="gates-left">
+							<p>Gate</p>
+						</div>
+						<div class="gates-right">
+							{{onePassenger.gate}}
+						</div>
+					</div>
+				</div>
+				
+				<!--始发/经停/目的-->
+				<div class="from-to-div">
+					<!-- 模板 start-->
+					<div class="from-via-to">
+						<!--始发-->
+						<div class="from">
+							<div class="place-en">Yinchuan</div>
+							<div class="place-ch">银川</div>
+							<div class="fvt-time-div">
+								<div>
+									<div class="fvt-img">
+										<img src="img/index/icon_take_off.png"/>
+									</div>
+									<div class="fvt-time">
+										12:00
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!--经停-->
+						<div class="via-div" :class="{noVia: onePassenger.noVia}">
+							<!--有经停-->
+							<div class="hasVia">
+								<!--飞机图标-->
+								<div class="via-flight-img">
+									<img src="img/index/icon_flight_flying.png"/>
+								</div>
+								
+								<!--<template v-for="via in onePassenger.vialist">
+								    <div class="via-flight">
+										<div class="place-en">{{via.EN}}</div>
+										<div class="place-ch">{{via.CH}}</div>
+										<div class="fvt-time-div">
+											<div>经停</div>
+										</div>
+									</div>
+									<div class="via-flight-img">
+										<img src="img/index/icon_flight_flying.png"/>
+									</div>
+								</template>-->
+							</div>
+							
+							<!--无经停-->
+							<div class="noHasVia">
+								<img src="img/index/icon_flight_flying_big.png"/>
+							</div>
+						</div>
+						
+						<!--目的-->
+						<div class="to">
+							<div class="place-en">Guiyang</div>
+							<div class="place-ch">贵阳</div>
+							<div class="fvt-time-div">
+								<div>
+									<div class="fvt-img">
+										<img src="img/index/icon_to.png"/>
+									</div>
+									<div class="fvt-time">
+										12:00
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 模板 end-->
+				</div>
+				
+				<!--航班状态-->
+				<div class="flight-status-div">
+					<div class="flight-status-img">
+						<img src="img/index/icon_last_call.png"/>
+					</div>
+					<div class="flight-status">
+						<p class="flight-status-ch">{{onePassenger.statusEn}}</p>
+					</div>
+				</div>
+			</div>
+			
+			<!--距离登机口地图-->
+			<div class="toGateMap">
+				<!--地图标题-->
+				<div class="map-tittle-div">
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/icon_destination_small.png"/>
+						</div>
+						Target
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/icon_position_small.png"/>
+						</div>
+						You are here
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/signs_boarding_gate.png"/>
+						</div>
+						Gate
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/signs_escalator.png"/>
+						</div>
+						Escalator
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/signs_toilet.png"/>
+						</div>
+						Toilet
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/signs_information.png" />
+						</div>
+						Inquiry
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/signs_elevator.png"/>
+						</div>
+						Lift
+					</div>
+					<div class="map-tittle-child">
+						<div class="map-place-sign">
+							<img src="img/index/signs_security_check.png" />
+						</div>
+						Security check
+					</div>
+				</div>
+				
+				<!--地图内容-->
+				<div class="mapCon">
+					<div class="mapContainer">
+						
+						<!--地图底图-->
+						<img :src="'img/' + homeData.airport_tittle + '/'+ onePassenger.mapSrc +'.png'" alt="" />
+					
+						<!--路线区域层-->
+						<div class="map-line">
+							<!--路线层-->
+							<div class="map-line-con">
+								<div class="lineArrow" hidden></div>
+							</div>
+							<!--障碍物层-->
+							<div class="fence-con">
+								<div class="fencePoint" hidden></div>
+							</div>
+						</div>
+					
+						<!--机场设施层-->
+						<div class="airport-facilities">
+							<div class="action wc" hidden></div>
+						</div>
+						
+						<!--当前位置、目的位置层-->
+						<div class="map-spot-con">
+							<div class="map-spot now-spot" hidden></div>
+							<div class="map-spot gate-spot" hidden>20</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<!--多人-->
+		<div class="manyPassenger" :class="{twoPassenger: manyPassenger.twoPassenger}">
+			<div>
+				<!-- 模板 start-->
+				<div class="passenger-flightData">
+					<!--旅客头像-->
+					<div class="passenger-img">
+						<img src="" onerror="this.src='../lib/img/logo/logo_default.png'"/>
+					</div>
+					
+					<!--旅客姓名-->
+					<div class="passenger-name face-recognition-data">
+						<span>我家有酒</span>
+					</div>
+					
+					<!--航班信息-->
+					<div class="boarding-info">
+						<!--航班号-->
+						<div class="passenger-flightNo">
+							<div class="p-flightNo">UX8800</div>
+							<div class="p-flightNo-time">2017-08-24</div>
+						</div>
+						
+						<!--始发/经停/目的-->
+						<div class="from-to-div">
+							<div class="from-via-to">
+								<!--始发-->
+								<div class="from">
+									<div class="place-en">xi`an</div>
+									<div class="place-ch">西安</div>
+								</div>
+								
+								<!--经停-->
+								<div class="via-div noVia">
+									<!--有经停-->
+									<div class="hasVia">
+										<!--飞机图标-->
+										<div class="via-flight-img">
+											<img src="img/index/icon_flight_flying.png"/>
+										</div>
+										
+										<div class="via-flight">
+											<div class="place-en">shanghai</div>
+											<div class="place-ch">上海</div>
+										</div>
+										
+										<!--飞机图标-->
+										<div class="via-flight-img">
+											<img src="img/index/icon_flight_flying.png"/>
+										</div>
+									</div>
+									
+									<!--无经停-->
+									<div class="noHasVia">
+										<img src="img/index/icon_flight_flying_big.png"/>
+									</div>
+								</div>
+								
+								
+								<!--目的-->
+								<div class="to">
+									<div class="place-en">guiYang</div>
+									<div class="place-ch">贵阳</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!--航班状态与登机口-->
+					<div class="flight-status-div">
+						<!--航班状态-->
+						<div class="flight-status">
+							正在登机 Bording
+						</div>
+						
+						<!--登机口-->
+						<div class="passenger-gates">
+							<div class="gates-left">
+								<p>登机口</p>
+								<p>Gate</p>
+							</div>
+							<div class="gates-right face-recognition-data">
+								D88
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 模板 end-->
+				
+			</div>
+		</div>
+		
+		<!--关闭页面倒计时-->
+		<div class="countdown">
+			Will automatically close after
+			<span class="countdown-time">{{dialogData.cdTime}}</span>
+			seconds
+		</div>
+	</div>
+</div>
+</body>
+<script src="js/face_recognition.js"></script>
+</html>

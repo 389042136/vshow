@@ -1,0 +1,216 @@
+﻿/*----------------------------   全局样式      -------- ------------------*/
+
+@font-face {
+    font-family: 'squre';
+    src: url('../../lib/font/TT0248M_.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	white-space: nowrap;
+	box-sizing: border-box;
+}
+
+html,body,#vueObj,.mbody,.home {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+[v-cloak]{
+    display: none;
+} 
+
+body{
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Chrome/Safari/Opera */
+	-khtml-user-select: none; /* Konqueror */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently not supported by any browser */
+	
+	cursor: none;
+	font-family: Arial, "Microsoft YaHei";
+	-webkit-font-smoothing: antialiased;
+}
+
+#vueObj {
+	position: relative;
+	background-size: 100% 100%;
+	text-shadow: 0.04rem 0.04rem 0 rgba(0, 0, 0, .2);
+}
+
+.mbody,.home {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+li {
+	list-style: none;
+}
+
+
+/**
+ * 页面中英文
+ */
+
+.en {
+	display: none;
+}
+
+.languageEn .en {
+	display: block;
+}
+
+.languageEn .ch {
+	display: none;
+}
+
+
+/**
+ * 动画统一属性
+ */
+
+.isAniamted {
+	animation-iteration-count: infinite; /*次数*/
+	animation-timing-function: linear;	/*匀速*/
+	animation-name: repeatRolling;
+}
+
+@keyframes repeatRolling {
+	0% {
+    	margin-left: 0;
+		transform: translateX(0.3rem);
+	}
+
+	50% {
+    	margin-left: calc(100% - 0.3rem);
+		transform: translateX(-100%);
+	}
+
+	100% {
+    	margin-left: 0;
+		transform: translateX(0.3rem);
+	}
+}
+
+
+/*默认主页*/
+
+.home {
+	z-index: 8;
+	background: url(../img/default/default.jpg);
+	background-size: 100% 100%;
+	color: #fff;
+	display: none;
+}
+
+
+/*----------------------------   自由文本      -------- ------------------*/
+
+.free_text {
+	width: 100%;
+	height: 0.9rem;
+	background: #000;
+	padding: 0 0.4rem;
+	font-size: 0.5rem;
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.free_text>div {
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.free_text .left {
+	margin-right: 0.3rem;
+}
+
+.free_text .left img {
+	width: 0.7rem;
+	height: 0.7rem;
+}
+
+.free_text .free_text_mid {
+	flex: 1;
+	display: -webkit-box;
+	-webkit-box-align: center;
+	-webkit-box-pack: center;
+	color: #f7b637;
+	overflow: hidden;
+	padding: 0 0.1rem;
+	-webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 0.1rem, rgba(0, 0, 0, 1) calc(100% - 0.1rem), rgba(0, 0, 0, 0) 100%);
+}
+
+.free_text .right {
+	margin-left: 0.3rem;
+}
+
+.free_text .right span {
+	color: rgba(255, 255, 255, .6);
+}
+
+.free_text .listPage {
+	margin-top: 0.1rem;
+}
+
+
+/**
+ * 自由文本动画
+ */
+
+.freeTextData.isAniamted {
+	animation-name: freeTextAniamte;
+}
+
+.freeTextData.isAniamted span {
+	padding-right: 0.3rem;
+}
+
+@keyframes freeTextAniamte {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-50%);
+	}
+}
+
+
+/**
+ * 光标动画
+ */
+
+.moveSign {
+	background: url(../img/index/bottom_glow.png);
+	background-size: 100% 100%;
+	width: 1rem;
+	height: 0.5rem;
+	position: absolute;
+	top: 0;
+	left: -1rem;
+	transform: translateY(-50%);
+	z-index: 20;
+}
+
+.moveSign.isAniamted {
+	animation-name: signAnimate;
+}
+
+@keyframes signAnimate {
+	0% {
+		left: -1.5rem;
+	}
+	100% {
+		left: 99%;
+	}
+}

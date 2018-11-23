@@ -1,0 +1,421 @@
+#app {
+  color: #fff;
+  background: linear-gradient(#0d1017, #313a57);
+  padding: 0 0.8rem;
+  font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.text-noData {
+  color: #818C9C;
+  font-size: 0.26rem;
+  text-align: center;
+  line-height: 3rem;
+  letter-spacing: 2px;
+}
+
+/**
+ * 首页 Top
+ */
+.index-top {
+  height: 1.9rem;
+}
+
+.tittle img {
+  width: 2rem;
+  /* height: 0.8rem; */
+  margin-right: 0.2rem;
+}
+
+.tittle .ch {
+  font-size: 0.5rem;
+  font-weight: 10;
+}
+
+.tittle .en {
+  font-size: 0.46rem;
+}
+
+.common-time .time {
+  font-size: 0.7rem;
+  letter-spacing: 0.08rem;
+  text-align: right;
+}
+
+.common-time .date {
+  font-size: 0.24rem;
+  color: #838594;
+  padding-right: 0.1rem;
+}
+
+/**
+ * 首页 mid
+ */
+.index-mid {
+  height: 6.65rem;
+  position: relative;
+}
+
+.index-mid #cloudwalkwebobj {
+  width: 10.2rem;
+  height: 100%;
+}
+
+.index-mid .mid-right {
+  width: 6.9rem;
+  height: 100%;
+  overflow-y: auto;
+  padding-top: 0.1rem;
+  position: absolute;
+  right: 0;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000000 2%, #000000 98%, rgba(0, 0, 0, 0) 100%);
+}
+
+.index-mid .new-pass {
+  position: absolute;
+  font-size: 0.26rem;
+  right: 3.5rem;;
+  top: -0.6rem;
+  color: #727584;
+  letter-spacing: 0.02rem;
+}
+
+.info-child {
+  background: url(../img/index/list_bg.png);
+  background-size: 100% 100%;
+  border-radius: 0.1rem;
+  width: 6.6rem;
+  height: 1.55rem;
+  padding: 0.2rem;
+  font-size: 0.26rem;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+}
+
+.info-child>img {
+  width: 1.1rem;
+  height: 1.2rem;
+  margin-right: 0.3rem;
+  border-radius: 0.1rem;
+}
+
+.info-child-right {
+  flex: 1;
+  overflow: hidden;
+}
+
+.info-top .vip-img {
+  width: 0.6rem;
+  height: 0.3rem;
+  margin: 0 0.1rem;
+}
+
+.info-top .birthday>img:first-child {
+  margin: 0 0.03rem;
+  width: 0.34rem;
+  height: 0.34rem;
+}
+
+.info-top .birthday>img:nth-child(2) {
+  width: 0.54rem;
+  height: 0.28rem;
+}
+
+.info-top .time {
+  font-size: 0.2rem;
+  color: #768195;
+}
+
+.info-flight {
+  margin-top: 0.2rem;
+  white-space: nowrap;
+}
+
+.info-flight>div {
+  flex: 1;
+  margin-right: 0.2rem;
+}
+
+.info-flight>div:first-child {
+  flex: 1;
+}
+
+.info-flight>div:last-child {
+  margin-right: 0;
+}
+
+.relevantPass .info-flight>div:nth-child(2) {
+  flex: 0.5;
+}
+
+.relevantPass .info-flight>div:nth-child(3) {
+  flex: 1.8;
+}
+
+.relevantPass .info-flight>div:nth-child(4) {
+  flex: 0.8;
+}
+
+.info-flight-tittle {
+  color: #B6BECB;
+  font-size: 0.18rem;
+  margin-bottom: 0.02rem;
+}
+
+/**
+ * 旅客信息提示框
+ */
+.dialogPass {
+  position: absolute;
+  top: 0.3rem;
+  right: -0.1rem;
+  z-index: 10;
+  width: 8.1rem;
+  height: 2.7rem;
+  background: #464D69;
+  padding: 0.36rem 0.3rem;
+  border-radius: 0.1rem;
+  font-size: 0.3rem;
+  overflow: hidden;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.6);
+}
+
+.noHasPass {
+  display: none;
+  font-size: 0.48rem;
+  padding-top: 0.7rem;
+  text-align: center;
+}
+
+.dialogNoPass .noHasPass {
+  display: block;
+}
+
+.dialogNoPass .hasPass {
+  display: none;
+}
+
+.dialogNoPass.dialogPass {
+  background: linear-gradient(to top right, #da4461, #d4995d);
+}
+
+.dialogPass .contain {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.3rem;
+  /* background: #202531; */
+}
+
+.dialogPass .contain img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.1rem;
+  position: absolute;
+}
+
+.dialogPass .isBirthday img {
+  animation: turn 5s infinite;
+  /*animation-iteration-count: 1;*/
+}
+
+.dialogPass .donut-front {
+  z-index: 5;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes turn {
+  20% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.name {
+  font-size: 0.3rem;
+  letter-spacing: 2px;
+  overflow: hidden;
+  margin-right: 0.1rem;
+  -webkit-mask-image: linear-gradient(to right,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 1) 3px,
+		rgba(0, 0, 0, 1) calc(100% - 3px),
+		rgba(0, 0, 0, 0) 100%);
+}
+
+.dialogPass .info-top>img {
+  width: 0.86rem;
+  height: 0.4rem;
+}
+
+.dialogPass .welcome {
+  color: #B0B5B9;
+  font-size: 0.24rem;
+}
+
+.dialogPass .time {
+  color: #FF6765;
+  line-height: 0.3rem;
+  font-size: 0.24rem;
+}
+
+.dialogPass .time span {
+  cursor: pointer;
+  border-bottom: 2px solid #B8505F;
+}
+
+.dialogPass .time span:hover {
+  color: rgb(240, 69, 66);
+}
+
+.dialogPass .info-flight {
+  margin-top: 0.23rem;
+}
+
+.dialogPass .info-flight-tittle {
+  font-size: 0.23rem;
+}
+
+/**
+ * 登机
+ */
+.boarding {
+  height: 1.8rem;
+  padding-right: 0.8rem;
+  padding-left: 0.6rem;
+  background: #1B2131;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.boarding>img {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.2rem;
+}
+
+.boarding .mid {
+  flex: 1;
+}
+
+.boarding-info {
+  font-size: 0.5rem;
+  margin-bottom: 0.1rem;
+}
+
+.boarding-info span {
+  color: #F6636B;
+  margin: 0 0.3rem;
+  padding: 0 0.1rem;
+  border: 0.03rem solid #F6636B;
+  border-radius: 10px;
+  line-height: 65px;
+  display: inline-block;
+}
+
+.boarding-info span:first-child {
+  margin-left: 0;
+}
+
+.relevantVIP {
+  font-size: 0.3rem;
+  color: #757B8B;
+  letter-spacing: 2px;
+}
+
+.vip-btn {
+  width: 3rem;
+  height: 1.1rem;
+  background: linear-gradient(to top right, #da4461, #d4995d);
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  font-weight: bold;
+  padding-top: 0.1rem;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+.vip-btn>div:nth-child(1) {
+  font-size: 0.34rem;
+}
+
+.vip-btn>div:nth-child(2) {
+  font-size: 0.2rem;
+  font-weight: normal;
+  margin-top: 0.05rem;
+}
+
+.vip-btn .num {
+  position: absolute;
+  background: #F75F63;
+  top: -0.1rem;
+  right: 0;
+  font-size: 0.3rem;
+  padding: 0 0.11rem;
+  line-height: 0.45rem;
+  border-radius: 0.22rem;
+  -webkit-transform: translateX(50%);
+}
+
+/**
+ * 相关旅客
+ */
+.relevantPass {
+  width: 7.35rem;
+  position: absolute;
+  z-index: 2;
+  top: 0.5rem;
+  right: 0.8rem;
+  bottom: 1.8rem;
+  background: #363C52;
+  padding: 0.1rem 0.2rem 0.1rem 0.3rem;
+  border-radius: 0.1rem;
+}
+
+.relevantPass .content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000000 2%, #000000 98%, rgba(0, 0, 0, 0) 100%);
+}
+
+.relevantPass .info-child {
+  width: 6.rem;
+  background: none;
+  padding: 0;
+  border-bottom: 1px solid #494F65;
+  height: 1.65rem;
+  margin-bottom: 0;
+  border-radius: initial;
+}
+
+.relevantPass .position {
+  color: #EBA371;
+}
+
+.triangle_border_down {
+  display: block;
+  width: 0;
+  height: 0;
+  border-width: 0.24rem 0.24rem 0;
+  border-style: solid;
+  border-color: #363C52 transparent transparent;
+  position: absolute;
+  bottom: -0.24rem;
+  right: 1.2rem;
+}
