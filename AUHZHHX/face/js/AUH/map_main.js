@@ -1,14 +1,3 @@
-/**********************
-    地图导航方法
- **********************/
-
-var mapContainer, // 需要拖动放大的div
-	mapNowGate, // 显示当前位置, 登机口的div
-	mapLineCon, // 显示地图线路的div
-	mapWidth, // 地图容器, 初始宽度, 高度
-	mapHeight, // 地图容器, 初始高度
-	fenceSize = {}; // 障碍物大小
-
 /**
  * 地图配置参数
  */
@@ -33,6 +22,13 @@ var map_config = {
 	isSkew: 0, // 地图中是否有倾斜路线, 0 ： 否    1： 是 
 	isReFence: 0, // 是否渲染障碍物, 1：是    0：否
 };
+
+var mapContainer, // 需要拖动放大的div
+	mapNowGate, // 显示当前位置, 登机口的div
+	mapLineCon, // 显示地图线路的div
+	mapWidth, // 地图容器, 初始宽度, 高度
+	mapHeight, // 地图容器, 初始高度
+	fenceSize = {}; // 障碍物大小
 
 /**
  * 地图方法
