@@ -1,0 +1,157 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    font-size: 14px;
+}
+
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+input,
+textarea {
+    outline: none;
+    border: none;
+}
+
+textarea.el-textarea__inner {
+    resize: none;
+}
+
+
+/**
+ * flex 布局
+ */
+
+[class*="flex-"] {
+    display: flex;
+}
+
+.flex-center {
+    .flex-j-center;
+    .flex-a-center;
+}
+
+.flex-j-center {
+    justify-content: center;
+}
+
+.flex-j-right {
+    justify-content: flex-end;
+}
+
+.flex-j-between {
+    justify-content: space-between;
+}
+
+.flex-a-center {
+    align-items: center;
+}
+
+
+/**
+ * 初始化滚动条
+ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-button {
+    height: 0px;
+    width: 0;
+    background-color: transparent;
+    opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #409EFF;
+    -webkit-border-radius: 8px;
+    border: 2px solid #fff;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+}
+
+
+/**
+ * 颜色
+ */
+
+.el-c-blue {
+    color: #409EFF;
+}
+
+.el-c-success {
+    color: #67C23A;
+}
+
+.el-c-danger {
+    color: #F56C6C;
+}
+
+.el-c-info {
+    color: #909399;
+}
+
+
+/**
+ * 样式类
+ */
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.tl {
+    text-align: left;
+}
+
+.tc {
+    text-align: center;
+}
+
+.tr {
+    text-align: right;
+}
+
+.c-router-view {
+    height: calc(100% - 8px);
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.border {
+    border: 1px solid #DCDFE6;
+    border-radius: 10px;
+}
+
+.cursor-move {
+    cursor: move;
+}

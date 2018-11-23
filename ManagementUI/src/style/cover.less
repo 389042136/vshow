@@ -1,0 +1,331 @@
+/** 全局class **/
+
+.el-tooltip__popper.is-dark {
+    white-space: nowrap;
+    background: rgba(48, 49, 51, 0.7);
+}
+
+.el-button .fa+span {
+    margin-left: 5px;
+}
+
+.el-tree-node__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/**
+ * 查询表单样式
+ */
+
+.form-query {
+    padding: 10px 20px;
+    background-color: #fff;
+}
+
+.form-query {
+    border-bottom: 1px solid #ddd;
+    .el-form-item {
+        margin-bottom: 0;
+    }
+    .el-form-item__content {
+        .el-input;
+    }
+    .el-input {
+        width: 150px;
+    }
+    .query-btn {
+        margin: 0 8px;
+    }
+    //时间输入框
+    .input-time {
+        .el-form-item__content {
+            .el-input;
+        }
+        .el-input {
+            width: 170px;
+        }
+    }
+}
+
+/**
+ * 表格 + 分页样式
+ */
+
+@paginationHeight: 50px;
+@tableHeader: 44px;
+.tablePagination {
+    height: calc(100% - 54px);
+    /**
+    * 分页样式
+    */
+    .pagination {
+        padding: 0 20px;
+        height: @paginationHeight;
+        font-size: 16px;
+        color: #666;
+        .el-pagination {
+            padding-right: 0;
+        }
+        .pagination-text {
+            font-weight: bold;
+            color: #409EFF;
+            margin: 0 5px;
+        }
+        &>p,
+        .el-pagination__jump {
+            margin: 0 10px;
+        }
+    }
+
+    /**
+    * 表格样式
+    */
+    .multipleTable-con {
+        height: calc(100% - @paginationHeight);
+    }
+
+    .multipleTable {
+        font-size: 14px;
+        height: 100%;
+        //表格主体超出滚动，表头固定
+        .el-table__body-wrapper {
+            height: calc(100% - @tableHeader);
+            overflow-y: auto;
+        }
+        th {
+            background: #d8d8d8;
+            height: @tableHeader;
+        }
+        /* &.el-table td,
+        &.el-table th {
+            padding: 10px 5px;
+        } */
+        .el-button {
+            padding: 6px 10px;
+        }
+    }
+}
+
+
+/**
+ * 上传文件统一样式
+ */
+
+.uploadFile {
+    .file-name {
+        margin-left: 10px;
+    }
+    .el-c-danger {
+        margin-top: 20px;
+        p {
+            line-height: 26px;
+            font-size: 14px;
+        }
+    }
+    .file-content {
+        margin-top: 20px;
+        img {
+            width: 100%;
+            display: block;
+        }
+    }
+}
+
+
+/**
+* 左侧树状图，右侧设备列表
+*/
+
+.deviceList {
+    display: flex;
+    padding: 30px;
+    .device-tree {
+        width: 270px;
+        overflow: hidden;
+        padding: 10px;
+    }
+    .el-tree {
+        padding-top: 10px;
+    }
+    /**右侧**/
+    .deviceList-right {
+        flex: 4;
+        overflow: hidden;
+        margin-left: 30px;
+    }
+    .deviceList-right-map {
+        height: calc(100% - 54px);
+        position: relative;
+        overflow: hidden;
+    }
+    /**表单**/
+    .dvcName {
+        .el-form-item__content {
+            .el-input;
+        }
+        .el-input {
+            width: 165px;
+        }
+        .el-input--suffix .el-input__inner {
+            padding-right: 15px;
+        }
+    }
+    .groupFlag {
+        .el-form-item__content {
+            .el-input;
+        }
+        .el-input {
+            width: 90px;
+        }
+    }
+    .table-index {
+        padding: 8px 0px;
+        .cell {
+            padding: 0px;
+        }
+    }
+    .el-table::before {
+        height: 0;
+    }
+}
+
+
+/**
+ * 地图统一样式
+ */
+
+@normal: #67C23A;
+@unNormal: #606266;
+@break: red;
+#map-move-con {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    user-select: none;
+    cursor: -webkit-grab;
+}
+
+.map-container {
+    position: relative;
+    border: 1px solid #F2F6FC;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    >img {
+        display: block;
+    }
+    //设备
+    .ponit {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transform: translate(-50%, -80%);
+        cursor: pointer;
+        color: @normal;
+        .fa {
+            outline: none;
+        }
+        &.normal {
+            color: @normal;
+        }
+        &.unNormal {
+            color: @unNormal;
+        }
+        &.break {
+            color: @break;
+        }
+    }
+    .isMoveDevPos {
+        opacity: 0.6;
+    }
+    //操作弹框
+    .operation-con,
+    .addDevice-con {
+        min-width: 40px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 3;
+        padding: 5px;
+        background: rgba(248, 246, 249, 0.7);
+        border: 1px solid rgba(116, 165, 197, 0.8);
+        border-radius: 5px;
+        text-align: center;
+        transform: translate(15px, -10px);
+        >div {
+            white-space: nowrap;
+            padding: 1px 3px;
+            margin-top: 2px;
+            border-radius: 3px;
+            cursor: pointer;
+            &:hover {
+                background: #409EFF;
+                color: #fff;
+            }
+        }
+    }
+}
+
+//设备状态提示框
+.map-status-con {
+    width: 100%;
+    height: 100%;
+    .map-status {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        background: rgba(248, 246, 249, 0.7);
+        border: 1px solid rgba(116, 165, 197, 0.8);
+        border-radius: 5px;
+        padding: 5px 7px;
+        i {
+            margin-right: 4px;
+            font-size: 22px;
+            transform: translateY(2px);
+            &.normal {
+                color: @normal;
+            }
+            &.unNormal {
+                color: @unNormal;
+            }
+            &.break {
+                color: @break;
+            }
+        }
+    }
+}
+
+
+/**
+* 设备对应信息弹框
+*/
+
+.map-device-info {
+    line-height: 18px;
+    .el-row>div:first-child {
+        text-align: right;
+        margin-right: 5px;
+        width: 36px;
+    }
+}
+
+
+/**
+ * 预览图片
+ */
+
+.lg-preview-wrapper {
+    span.lg-preview-nav-arrow {
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+    }
+    img.lg-preview-img {
+        max-width: calc(100% - 170px);
+    }
+}
