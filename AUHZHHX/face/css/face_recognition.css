@@ -74,7 +74,7 @@ body {
 	position: absolute;
 }
 
-#clock div img{
+#clock div img {
 	width: 100%;
 	height: 100%;
 }
@@ -104,13 +104,14 @@ body {
 }
 
 #hour {
-    width: 0.58rem;
-    height: 2.02rem;
+	width: 0.58rem;
+	height: 2.02rem;
 	left: 2.01rem;
-    top: 1.32rem;
+	top: 1.32rem;
 }
 
-#minute, #second {
+#minute,
+#second {
 	width: 0.38rem;
 	height: 4.6rem;
 	left: 2.11rem;
@@ -321,7 +322,7 @@ body {
 
 .passenger-name {
 	display: -webkit-box;
-    -webkit-box-align: center;
+	-webkit-box-align: center;
 	-webkit-box-pack: end;
 	font-weight: bold;
 	letter-spacing: 0.05rem;
@@ -334,7 +335,8 @@ body {
 
 .onePassenger .flight-time {
 	color: #95b3bb;
-	font-size: 0.3rem;;
+	font-size: 0.3rem;
+	;
 	text-align: center;
 	line-height: 0.6rem;
 }

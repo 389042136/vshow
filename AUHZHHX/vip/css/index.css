@@ -77,7 +77,8 @@
 .index-mid .new-pass {
   position: absolute;
   font-size: 0.26rem;
-  right: 3.5rem;;
+  right: 3.5rem;
+  ;
   top: -0.6rem;
   color: #727584;
   letter-spacing: 0.02rem;
@@ -248,10 +249,10 @@
   overflow: hidden;
   margin-right: 0.1rem;
   -webkit-mask-image: linear-gradient(to right,
-		rgba(0, 0, 0, 0) 0%,
-		rgba(0, 0, 0, 1) 3px,
-		rgba(0, 0, 0, 1) calc(100% - 3px),
-		rgba(0, 0, 0, 0) 100%);
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 3px,
+    rgba(0, 0, 0, 1) calc(100% - 3px),
+    rgba(0, 0, 0, 0) 100%);
 }
 
 .dialogPass .info-top>img {

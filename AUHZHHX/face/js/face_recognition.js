@@ -1,14 +1,8 @@
-﻿
-$(function() {
-	//初始页面
-	initObject.init();
-});
-
-/**
+﻿/**
  * 全局参数
  */
 var initObject = {
-	
+
 	//设备坐标
 	devicePos: {
 		x: 72,
@@ -37,7 +31,7 @@ var initObject = {
 			isAnimated: false,
 		},
 	},
-	
+
 	//光标
 	moveSignObj: null,
 
@@ -46,7 +40,7 @@ var initObject = {
 		obj: null,
 		data: null,
 	},
-		
+
 	/**
 	 * 人脸弹框数据
 	 */
@@ -65,7 +59,7 @@ var initObject = {
 		flightTime: '',
 		flightNo: '',
 		gate: '',
-		statusCode: 0,	// 0：无   1：正在登机   2： 催促登机
+		statusCode: 0, // 0：无   1：正在登机   2： 催促登机
 		noVia: false,
 		vialist: [],
 		statusCh: '',
@@ -85,7 +79,7 @@ var initObject = {
 	/**
 	 * 初始化
 	 */
-	init: function() {
+	init: function () {
 		//初始化时钟秒表
 		tools.secondClock();
 
@@ -94,10 +88,10 @@ var initObject = {
 
 		//加载相应机场的地图数据
 		this.getJavaScript();
-		
+
 		//自由文本
 		tools.controlFreeText();
-		
+
 		//初始化人脸识别
 		faceRecognition.initPlugin();
 
@@ -108,7 +102,7 @@ var initObject = {
 	/**
 	 * 缓存DOM对象
 	 */
-	saveDom: function() {
+	saveDom: function () {
 		//人脸弹框
 		this.faceInfoDialog.obj = $('#face-recognition');
 
@@ -120,35 +114,35 @@ var initObject = {
 
 		//光标
 		this.moveSignObj = $('.moveSign');
-		
+
 		//自由文本
 		this.freeText.obj = $('.freeTextData');
 	},
-	
+
 	/**
 	 * 动态加载js文件
 	 */
-	getJavaScript: function(){
+	getJavaScript: function () {
 		//需要加载的js文件
-		var js_arr    =  ['map_data.js', 'map_main.js'],
+		var js_arr = ['map_data.js', 'map_main.js'],
 			js_length = js_arr.length;
-		$.each(js_arr, function(i, item){
-			$.getScript(`js/${config.airportCode}/${item}?${new Date()}`, function() { 
-				if( --js_length == 0){
+		$.each(js_arr, function (i, item) {
+			$.getScript(`js/${config.airportCode}/${item}?${new Date()}`, function () {
+				if (--js_length == 0) {
 					initObject.getAirportData();
 				}
 			});
 		});
 	},
-	
+
 	/**
 	 * 获取对应机场的数据
 	 */
-	getAirportData: function() {
+	getAirportData: function () {
 		//获取设备位置坐标 
-		common.getIp(function(ip) {
+		common.getIp(function (ip) {
 			var pos = deviceIp[ip];
-			if(pos) initObject.devicePos = pos;
+			if (pos) initObject.devicePos = pos;
 		})
 	}
 };
@@ -157,15 +151,15 @@ var initObject = {
  * 人脸识别
  */
 var faceRecognition = {
-	cloudwalkobj: {},   //人脸识别插件
+	cloudwalkobj: {}, //人脸识别插件
 	cloudwalkCon: null,
-	isGetFace: true,  		//是否获得人脸
+	isGetFace: true, //是否获得人脸
 	cacheData: [],
 
 	/**
 	 * 初始化人脸识别,并打开摄像头
 	 */
-	initPlugin: function() {
+	initPlugin: function () {
 		this.cloudwalkobj = document.createElement("object");
 		this.cloudwalkobj.width = '100%';
 		this.cloudwalkobj.height = '100%';
@@ -185,111 +179,111 @@ var faceRecognition = {
 		//定时抓拍人脸
 		this.initFace();
 	},
-	
+
 	/**
 	 * 定时抓拍当前所有人脸
 	 */
-	initFace: function() {
+	initFace: function () {
 		//清空定时器
 		clearInterval(this.getFaceTimer);
-		this.getFaceTimer = setInterval(function() {
-			if(config.isTest) {
+		this.getFaceTimer = setInterval(function () {
+			if (config.isTest) {
 				faceRecognition.getAllFaceTest();
-			}else {
+			} else {
 				faceRecognition.getAllFace();
 			}
 		}, config.captureFaceTime * 1000);
 	},
-	
-	getAllFaceTest: function() {
+
+	getAllFaceTest: function () {
 		var _this = this,
 			imgLength = 1;
-		for(var i = 0; i < imgLength; i++) {
-			$.get('../data.json', function(data) {
-				if(data.code == 0) {
+		for (var i = 0; i < imgLength; i++) {
+			$.get('../data.json', function (data) {
+				if (data.code == 0) {
 					var info = data.data[0];
-					if(info.score >= config.faceScore) {
-						var falg = _this.cacheData.some(function(item){
+					if (info.score >= config.faceScore) {
+						var falg = _this.cacheData.some(function (item) {
 							return item.IDCard == info.certNo;
 						});
 						_this.cacheData.push(_this.dealFaceData(info));
 					}
 				}
-				if( --imgLength == 0 && _this.cacheData.length > 0) {
+				if (--imgLength == 0 && _this.cacheData.length > 0) {
 					showFaceInfo.showDialog(_this.cacheData);
 					_this.cacheData = [];
 				}
 			})
 		}
 	},
-	
+
 	/**
 	 * 抓取人脸
 	 */
-	getAllFace: function() {
+	getAllFace: function () {
 		var info = this.cloudwalkobj.cwGetFacesInFrame(),
 			json = $.parseJSON(info);
-		if(json.code == 0) {
+		if (json.code == 0) {
 			var photoArr = [];
-			$.each(json.data, function(i, face) {
+			$.each(json.data, function (i, face) {
 				//data:image/jpeg;base64, + face.faceString
 				photoArr.push(face.faceString);
 			});
-			
+
 			//上传照片
-			if(this.isGetFace) this.uploadPhoto(photoArr);
+			if (this.isGetFace) this.uploadPhoto(photoArr);
 		}
 	},
-	
+
 	/**
 	 * 上传5张照片
 	 * @param imgArr base64
 	 */
-	uploadPhoto: function(imgArr) {
-		if(imgArr.length > 0) {
+	uploadPhoto: function (imgArr) {
+		if (imgArr.length > 0) {
 			this.isGetFace = false;
 			var _this = this,
 				img = imgArr.slice(0, 5),
 				imgLength = img.length,
 				url = config.server + '/spider/cloudWalkService/passenger/daily/recog';
-			img.forEach(function(item) {
+			img.forEach(function (item) {
 				var params = {
 					faceImage: item,
 					topN: 1
 				};
-				common.ajax(url, params).then(function(data) {
+				common.ajax(url, params).then(function (data) {
 					console.log('旅客人脸信息：', data);
-					if(data.code == 0) {
+					if (data.code == 0) {
 						var info = data.data[0];
-						if(info.score >= config.faceScore) {
-							var falg = _this.cacheData.some(function(item){
+						if (info.score >= config.faceScore) {
+							var falg = _this.cacheData.some(function (item) {
 								return item.IDCard == info.certNo;
 							});
-							if(!falg) {
+							if (!falg) {
 								_this.cacheData.push(_this.dealFaceData(info, item));
 							}
 						}
 					}
-					if( --imgLength == 0) {
-						if(_this.cacheData.length > 0) {
+					if (--imgLength == 0) {
+						if (_this.cacheData.length > 0) {
 							showFaceInfo.showDialog(_this.cacheData);
 							_this.cacheData = [];
-						}else {
+						} else {
 							_this.isGetFace = true;
 						}
 					}
-				}, function() {
+				}, function () {
 					_this.isGetFace = true;
 				})
 			})
 		}
 	},
-	
+
 	/**
 	 * 处理返回的人脸数据
 	 * 将获取的数据缓存，整体处理，防止数据丢失
 	 */
-	dealFaceData: function(data) {
+	dealFaceData: function (data) {
 		var info = data.name.split('-'),
 			obj = {
 				IDCard: data.certNo,
@@ -318,7 +312,7 @@ var showFaceInfo = {
 	 * 显示智慧航显页面
 	 * @param data [{},{}]
 	 */
-	showDialog: function(data) {
+	showDialog: function (data) {
 		//清空定时器
 		clearInterval(faceRecognition.getFaceTimer);
 		clearInterval(this.intervalSwitchImgTimer);
@@ -327,12 +321,12 @@ var showFaceInfo = {
 		faceRecognition.cloudwalkCon.css('visibility', 'hidden');
 
 		//判断是否为多人
-		if(data.length == 1) {
+		if (data.length == 1) {
 			initObject.faceInfoDialog.obj.removeClass('isMany').fadeIn();
 			this.reOneInfo(data[0]);
 		} else {
 			//双人样式
-			if(data.length == 2) {
+			if (data.length == 2) {
 				initObject.manyPassenger.twoPassenger = true;
 			} else {
 				initObject.manyPassenger.twoPassenger = false;
@@ -340,9 +334,9 @@ var showFaceInfo = {
 			initObject.faceInfoDialog.obj.addClass('isMany').fadeIn();
 			this.reManyInfo(data);
 		}
-		
+
 		//光标
-	    tools.moveSign();
+		tools.moveSign();
 
 		//关闭页面倒计时 
 		this.countdown();
@@ -351,14 +345,14 @@ var showFaceInfo = {
 	/**
 	 * 渲染单人旅客信息
 	 */
-	reOneInfo: function(data) {
+	reOneInfo: function (data) {
 		var _this = this;
 		//航空公司logo
 		initObject.onePassenger.flightLogoSrc = config.ftpUrl + '/lib/img/logo/M_' + data.FLIGHTNO.substr(0, 2) + '.png';
 
 		//姓名
 		initObject.onePassenger.name = tools.nameFormat(data[_this.faceKey[0]]);
-		
+
 		//时间
 		var date = common.dateFormat(new Date(), 'yyyy-MM-dd E').split(' ');
 		var passDate = date[0];
@@ -374,9 +368,9 @@ var showFaceInfo = {
 		//是否有经停站
 		var noVia = '',
 			viaTemp = '';
-		if(data[_this.faceKey[4]] && data[_this.faceKey[4]].length > 0) {
+		if (data[_this.faceKey[4]] && data[_this.faceKey[4]].length > 0) {
 			//遍历经停站
-			$.each(data[_this.faceKey[4]], function(i, items) {
+			$.each(data[_this.faceKey[4]], function (i, items) {
 				viaTemp += `<div class="via-flight">
 								<div class="place-en">${items.EN}</div>
 								<div class="place-ch">${items.CH}</div>
@@ -442,10 +436,10 @@ var showFaceInfo = {
 		initObject.onePassenger.obj.find('.from-to-div').html(fromTOTemp);
 
 		//航班状态
-		if(data.STATUS_PRO == 'BOR') {
+		if (data.STATUS_PRO == 'BOR') {
 			//登机
 			initObject.onePassenger.statusCode = 1;
-		} else if(data.STATUS_PRO == 'LBD') {
+		} else if (data.STATUS_PRO == 'LBD') {
 			//催促登机
 			initObject.onePassenger.statusCode = 2;
 		} else {
@@ -453,7 +447,7 @@ var showFaceInfo = {
 		}
 		initObject.onePassenger.statusCh = data[_this.faceKey[7]];
 		initObject.onePassenger.statusEn = data[_this.faceKey[8]];
-		
+
 		//图片加载完成后，超出滚动  
 		_this.loadImg(initObject.onePassenger.obj);
 
@@ -464,25 +458,25 @@ var showFaceInfo = {
 	/**
 	 * 渲染多人旅客信息
 	 */
-	reManyInfo: function(data) {
+	reManyInfo: function (data) {
 		var manyContainer = initObject.manyPassenger.obj,
 			fromTOTemp = '',
 			_this = this;
 		manyContainer.empty();
 
 		//遍历旅客信息
-		$.each(data, function(i, items) {
+		$.each(data, function (i, items) {
 			//只显示3名旅客
-			if(i > 2) {
+			if (i > 2) {
 				return false;
 			}
 
 			var flightStatus = null;
 			//航班状态
-			if(items.STATUS_PRO == 'BOR') {
+			if (items.STATUS_PRO == 'BOR') {
 				//登机
 				flightStatus = 'boarding';
-			} else if(items.STATUS_PRO == 'LBD') {
+			} else if (items.STATUS_PRO == 'LBD') {
 				//催促登机
 				flightStatus = 'lastCall';
 			}
@@ -493,7 +487,7 @@ var showFaceInfo = {
 			//是否有经停站
 			var noVia = items.VIALIST.length > 0 ? '' : 'noVia',
 				viaTemp = '';
-			$.each(items.VIALIST, function(j, item) {
+			$.each(items.VIALIST, function (j, item) {
 				viaTemp += `<div class="via-flight">
 								<div class="place-en">${item.EN}</div>
 								<div class="place-ch">${item.CH}</div>
@@ -579,27 +573,27 @@ var showFaceInfo = {
 	/**
 	 * 图片加载完成
 	 */
-	loadImg: function(obj) {
+	loadImg: function (obj) {
 		var _this = this,
 			imgArr = obj.find('.from-to-div img'),
 			imgNum = imgArr.length;
-		imgArr.load(function() {
-			if( --imgNum == 0) {
+		imgArr.load(function () {
+			if (--imgNum == 0) {
 				tools.repeatRolling(obj.find('.isAniamted'), 10);
 			}
 		});
 	},
-	
+
 	/**
 	 * 倒计时关闭页面
 	 */
-	countdown: function() {
+	countdown: function () {
 		var _this = this;
 		initObject.faceInfoDialog.cdTime = config.faceShowTime;
-		var countdownTimer = setInterval(function() {
-			if(1 == initObject.faceInfoDialog.cdTime) {
+		var countdownTimer = setInterval(function () {
+			if (1 == initObject.faceInfoDialog.cdTime) {
 				clearInterval(countdownTimer);
-				initObject.faceInfoDialog.obj.fadeOut('normal', function() {
+				initObject.faceInfoDialog.obj.fadeOut('normal', function () {
 					_this.dialogHide();
 				});
 				return false;
@@ -611,9 +605,11 @@ var showFaceInfo = {
 	/**
 	 * 弹框关闭后，处理事件
 	 */
-	dialogHide: function() {
+	dialogHide: function () {
 		//停止动画
-		initObject.faceInfoDialog.obj.find('.isAniamted').css({'animation-duration': 0 + 's'});;
+		initObject.faceInfoDialog.obj.find('.isAniamted').css({
+			'animation-duration': 0 + 's'
+		});;
 		initObject.moveSignObj.removeClass('isAniamted');
 
 		//显示视频
@@ -625,10 +621,10 @@ var showFaceInfo = {
 
 		//清空路线定时器
 		clearInterval(Map_fun.drawLineTimer);
-		
+
 		//重新上传图片
 		faceRecognition.isGetFace = true;
-		
+
 		//重新定时抓拍人脸
 		faceRecognition.initFace();
 	},
@@ -636,7 +632,7 @@ var showFaceInfo = {
 	/**
 	 * 定时切换温馨提示
 	 */
-	intervalswitchImg: function() {
+	intervalswitchImg: function () {
 		this.intervalSwitchImgTimer = setInterval(tools.switchImg, (config.reminderImgTime + 1) * 1000);
 	}
 };
@@ -647,10 +643,10 @@ var showFaceInfo = {
 var vueObj = new Vue({
 	el: '#vueObj',
 	data: {
-		homeData: initObject.homeData, 		 // 首页数据
+		homeData: initObject.homeData, // 首页数据
 		dialogData: initObject.faceInfoDialog, // 弹框数据
 		onePassenger: initObject.onePassenger, // 单人数据
-		manyPassenger: initObject.manyPassenger// 多人数据
+		manyPassenger: initObject.manyPassenger // 多人数据
 	},
 });
 
@@ -662,15 +658,15 @@ var tools = {
 	/**
 	 * 秒表
 	 */
-	secondClock: function() {
-		setInterval(function() {
+	secondClock: function () {
+		setInterval(function () {
 			var data = common.dateFormat(new Date(), 'yyyy.MM.dd HH mm ss E').split(' ');
 			tools.clockShow(data[1], data[2], data[3]);
-			
+
 			initObject.homeData.longTime = data[0];
 			initObject.homeData.shortTime = data[1] + ':' + data[2];
 			initObject.homeData.week = data[4];
-			
+
 			/*if(data[1] % 6 == 0 && data[2] == '00' && data[3] == '00') {
 	        	console.clear();
 	        }*/
@@ -680,8 +676,8 @@ var tools = {
 	/**
 	 * 时钟显示
 	 */
-	clockShow: function(hour, minute, second) {
-		if(hour > 12) {
+	clockShow: function (hour, minute, second) {
+		if (hour > 12) {
 			hour = hour - 12;
 		}
 		hourAngle = (360 / 12) * hour + (360 / (12 * 60)) * minute;
@@ -695,7 +691,7 @@ var tools = {
 	 * 处理姓名
 	 * @param name
 	 */
-	nameFormat: function(name) {
+	nameFormat: function (name) {
 		var n = name.split(' ').slice(1).join(' ');
 		//var n = name.replace(name.charAt(1), '*');
 		return '* ' + n;
@@ -704,61 +700,71 @@ var tools = {
 	/**
 	 * 切换温馨提示
 	 */
-	switchImg: function() {
+	switchImg: function () {
 		var that = initObject.homeData.reminderImg,
 			imgArrIndex = ++that.index % that.imgArr.length;
 		that.index = imgArrIndex == 0 ? 0 : that.index;
 
 		that.imgSrc = config.airportCode + '/' + that.imgArr[imgArrIndex];
 		that.isAnimated = true;
-		setTimeout(function() {
+		setTimeout(function () {
 			that.isAnimated = false;
 		}, 1000);
 	},
-	
+
 	/**
 	 * 光标
 	 */
-	moveSign: function(){
+	moveSign: function () {
 		initObject.moveSignObj.removeClass('isAniamted');
-		setTimeout(function(){
-			initObject.moveSignObj.addClass('isAniamted').css({'animation-duration': config.faceShowTime + 's'});
+		setTimeout(function () {
+			initObject.moveSignObj.addClass('isAniamted').css({
+				'animation-duration': config.faceShowTime + 's'
+			});
 		}, 100);
 	},
-	
+
 	/**
 	 * 钟摆滚动
 	 */
-	repeatRolling: function(obj, time){
-		obj.each(function(i, item) {
-			var	obj = $(item),
+	repeatRolling: function (obj, time) {
+		obj.each(function (i, item) {
+			var obj = $(item),
 				width = obj.width(),
 				lastLi = obj.parent().width(),
 				t = width > lastLi ? (width / lastLi > 1.3 ? time : time / 2) : 0;
-			obj.css({'animation-duration': t + 's'});
+			obj.css({
+				'animation-duration': t + 's'
+			});
 		});
 	},
-	
+
 	/**
 	 * 自由文本
 	 * @param {Object} data 内容
 	 */
-	controlFreeText: function(){
+	controlFreeText: function () {
 		var data = config.freeText;
-		setTimeout(function() {
+		setTimeout(function () {
 			//判断自由文本内有是否改变
 			var _that = initObject.freeText.obj,
-				width = _that.html('<span>'+ data +'</span>').width(),
+				width = _that.html('<span>' + data + '</span>').width(),
 				lastLi = _that.parent().width();
-			
+
 			//判断自由文本是否需要滚动
-			if(width > lastLi){
+			if (width > lastLi) {
 				var time = width / config.freeTextSpeed;
-				_that.append('<span>'+ data +'</span>').addClass('isAniamted').css({'animation-duration': time + 's'});
+				_that.append('<span>' + data + '</span>').addClass('isAniamted').css({
+					'animation-duration': time + 's'
+				});
 			}
 		}, 50);
-		
+
 		//保存自由文本
 		//initObject.freeText.data = data;
 	},
 };
+
+$(function () {
+	initObject.init();
+});

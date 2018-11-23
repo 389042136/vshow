@@ -45,7 +45,7 @@ img {
  * flex 布局
  */
 
-[class*="flex"] {
+[class*="flex-"] {
     display: flex;
 }
 
