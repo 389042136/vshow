@@ -6,8 +6,9 @@
 title: Vshow | Dom
 subtitle:
 description:
-keywords:
+keywords: vshow
 author: Hu Xiaodo
+email:  389042136@qq.com
 language: zh-CN
 timezone:
 
@@ -21,8 +22,8 @@ permalink_defaults:
 # Directory
 source_dir: source
 public_dir: public
-tag_dir: tags
-archive_dir: archives
+# tag_dir: tags
+# archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
