@@ -4,7 +4,7 @@
 		</x-header>
 		<div class="index-main notice-main">
 			<ul class="flex flex-wrap notice-box"> 
-				<router-link tag="li" :to="{name:'noticeInfo', params:item}" v-for="(item, index) in secondaryDataList" :key="index" :id="'noticesItem'+index" class="notice-box-item" :class="'bgImg'+index" >
+				<li v-for="(item, index) in secondaryDataList" :key="index" :id="'noticesItem'+index" class="notice-box-item" :class="'bgImg'+index" @click="toNoticeInfo(item.enumId)">
 					<div class="div-img">
 						<img v-if="item.enumId == 5" src="../../assets/images/icon_notice.png" alt="">
 						<img v-if="item.enumId == 6" src="../../assets/images/icon_notice_sercurity.png" alt="">
@@ -13,7 +13,7 @@
 						<img v-if="item.enumId == 9" src="../../assets/images/icon_notice_certificate.png" alt="">
 					</div>
 					<h4>{{item.enumName}}</h4>
-				</router-link>
+				</li>
 			</ul>		
 		</div>
 	</div>
@@ -43,8 +43,24 @@
             callback(){
                 this.$router.push({name: 'index'});
 			},
-			toNoticeInfo(data){
-				this.$router.push({path: '/noticeInfo'});
+			toNoticeInfo(id){
+				switch(id) {
+                    case 5:
+                        this.$router.push({name: 'noticeInfoBoarding'}); 
+                        break;
+                    case 6:
+                        this.$router.push({name: 'noticeInfoCheckin'}); 
+                        break;
+                    case 7:
+                        this.$router.push({name: 'noticeInfoHand'}); 
+                        break;
+                    case 8:
+                        this.$router.push({name: 'noticeInfoLuggage'}); 
+                        break;
+                    case 9:
+                        this.$router.push({name: 'noticeInfoCard'}); 
+                        break;
+                } 
 			},
 			init(){
 				getMenulist({

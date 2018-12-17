@@ -7,11 +7,11 @@
 				<li v-for="(item, index) in dataList" :key="index" @click.stop="toHotelInfo(item)" :id="'noticesItem'+index" class="notice-box-item" :class="'bgImg'+index">
 					<img :src="item.scenic_logo" alt="" v-imgReactive>
 					<div class="down">
-							<h4 class="div-h4">{{item.scenic_name_ch}}</h4>
-							<div class="spot-sign">
-								<i></i>
-								{{item.scenic_position}}
-						    </div>
+						<h4 class="div-h4">{{item.scenic_name_ch}}</h4>
+						<div class="spot-sign">
+							<i></i>
+							{{item.scenic_position}}
+					    </div>
 					</div>
 				</li>
 			</ul>		
@@ -110,28 +110,6 @@
 			box-sizing: border-box;
 			position: relative;
 			overflow: hidden;
-			.spot-sign {
-				position: absolute;
-				bottom: 0.24rem;
-				right: 0.32rem;
-				height: 0.3rem;
-				line-height: 0.3rem;
-				border-radius: 0.3rem;
-				padding-left: 0.4rem;
-				// padding: 0.1rem 0.6rem 0rem 0.7rem;
-				font-size: 0.24rem;
-				color: rgb(231, 228, 228);
-				box-sizing: border-box;
-				>i {
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 0.28rem;
-					height: 0.28rem;
-					background: url(../../assets/images/icon_location_28.png) no-repeat center center;
-					background-size: 100%;
-			     }
-			}
 			img{
 				position: absolute;
 				top: 50%;
@@ -149,7 +127,9 @@
 				 padding: 0 0.32rem 0.24rem;
 				 box-sizing: border-box;
 				 background: @linear-gradient-mask;
+				 color: #fff;
 				.div-h4{
+					width: 45%;
 					position: absolute;
 					font-size: 0.32rem;
 					font-weight: normal;
@@ -158,7 +138,31 @@
 					overflow: hidden;
 					text-overflow:ellipsis;
 					white-space: nowrap;
-					color: #fff;
+					
+				}
+				.spot-sign {
+					max-width: 45%;
+					position: absolute;
+					bottom: 0.24rem;
+					right: 0.32rem;
+					height: 0.3rem;
+					line-height: 0.3rem;
+					border-radius: 0.3rem;
+					padding-left: 0.4rem;
+					font-size: 0.24rem;
+					box-sizing: border-box;
+					overflow: hidden;
+					text-overflow:ellipsis;
+					white-space: nowrap;
+					>i {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 0.28rem;
+						height: 0.28rem;
+						background: url(../../assets/images/icon_location_28.png) no-repeat center center;
+						background-size: 100%;
+				     }
 				}
 			}
 

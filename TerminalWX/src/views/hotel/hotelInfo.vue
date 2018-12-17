@@ -14,7 +14,7 @@
 					<div class="info-div-img">
 						<img class="info-img" src="../../assets/images/icon_location_36.png">
 					</div>
-					<p class="info-km">[{{hotelinfos.hotel_distant}}km]</p>
+					<p class="info-km" v-if="hotelinfos.hotel_distant">[{{hotelinfos.hotel_distant}}km]</p>
 					<p class="info-address">{{hotelinfos.hotel_address}}</p>
 				</div>
 				<div class="info-div-p">
@@ -46,12 +46,9 @@
 						<div class="div-ul-img">
 						   <img class="ul-img" :src="item.room_logo_list" alt=""  v-imgReactive>
 						</div>
-						<div class="down flex flex-column">
-							<div class="down-div-t flex flex-left">
-								<div class="down-div-pice">
-								   <p class="pice">¥{{item.room_price}}每晚</p>
-								</div>
-								<p class="qi">{{item.room_name_ch}}</p>
+						<div class="down">
+							<div class="down-div-t">
+								<p class="pice" v-if="item.room_price">¥{{item.room_price}}每晚</p>{{item.room_name_ch}}
 							</div>
 							<ul class="right-info-ul flex flex-justfy">
 								<li class="right-info-li flex flex-left"  v-if="item.room_num_of_bed !='0'">
@@ -208,8 +205,8 @@ export default {
 			width: 100%;
 		    box-sizing: border-box;
 			.info-div-img{
-				height: 0.28rem;
 				width: 0.28rem;
+				height: 0.28rem;
 				margin-right: 0.1rem;
 				.info-img{
 					width: 100%;
@@ -224,9 +221,10 @@ export default {
 				font-size: 0.24rem;
 				margin-left: 0.12rem;
 				font-weight: normal;
-				overflow: hidden;
-				text-overflow:ellipsis;
-				white-space: nowrap;
+				line-height: 0.4rem;
+				// overflow: hidden;
+				// text-overflow:ellipsis;
+				// white-space: nowrap;
 				color:#828999;
 			}
 		}
@@ -311,7 +309,7 @@ export default {
 				// overflow: hidden;
 				border-bottom: 1px solid rgb(243, 237, 237);
 				.div-ul-img{
-					width: 1.6rem;
+					flex:0 0 1.6rem;
 					height: 1.2rem;
 					margin-right: 0.24rem;
 					border-radius: 0.16rem;
@@ -321,33 +319,40 @@ export default {
 					flex:1;
 					padding: 0.16rem 0 0.1rem;
 					.down-div-t{
-						.down-div-pice{
-							border-radius: 0.08rem;
-							margin-right: 0.16rem;
-							height: 0.36rem;
-							border: 0.02rem solid @red-color;
-							.pice{
-								font-family: 'squre';
-								font-size: 0.28rem;
-								font-weight: normal;
-								text-align: left;
-								line-height: 0.36rem;
-								padding: 0.02rem;
-								color: @red-pice-color;
-							}
-						}
-						.qi{
+						max-width: 3.7rem;
+						height: 0.4rem;
+						font-size: 0.28rem;
+						font-weight: normal;
+						text-align: left;
+						color: @dark-color;
+						overflow: hidden;
+                		text-overflow: ellipsis;
+						white-space: nowrap;
+						.pice{
+							display: inline-block;
+							height: 0.34rem;
+							font-family: 'squre';
 							font-size: 0.28rem;
 							font-weight: normal;
-							color: @dark-color;
+							text-align: left;
+							line-height: 0.36rem;
+							vertical-align: top;
+							border-radius: 0.08rem;
+							margin-right: 0.16rem;
+							border: 0.02rem solid @red-color;
+							color: @red-pice-color;
 						}
 					}
+
 					.right-info-ul{
 						width: 100%;
-						margin-top: 0.24rem;
+						margin-top: 0.16rem;
 						>.right-info-li{
 							display: block;
-							margin-right: 0.24rem;
+							margin-right: 0.22rem;
+							&:last-child {
+								margin-right: 0;
+							}
 						}
 						.info-div-img{
 							width: 0.28rem;

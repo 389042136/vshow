@@ -20,9 +20,10 @@ import './style/cover.less';
 /**
  * 引入组件
  */
+
 Vue.use(MintUI);
 Vue.use(WechatPlugin);
-Vue.use(ToastPlugin);
+Vue.use(ToastPlugin); 
 Vue.component('x-header', XHeader)
 Vue.component('panel', Panel)
 Vue.component('popup', Popup)
@@ -40,14 +41,14 @@ FastClick.attach(document.body)
 /**
  * 路由拦截
  */
-router.beforeEach((to, from, next) => {
-	// 微信浏览器拦截，只能在微信内置浏览器中访问
-	if(browser().weixin || to.path == '/WXError') {
-		next();
-	}else {
-		next('/WXError'); 
-	}
-});
+// router.beforeEach((to, from, next) => {
+// 	// 微信浏览器拦截，只能在微信内置浏览器中访问
+// 	if(browser().weixin || to.path == '/WXError') {
+// 		next();
+// 	}else {
+// 		next('/WXError'); 
+// 	}
+// });
 
 /**
  * 通过使用一个空的Vue实例作为中央事件总线

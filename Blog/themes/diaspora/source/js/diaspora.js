@@ -137,15 +137,18 @@ var Diaspora = {
             })
             return
         }
-        var sourceSrc= $("#audio source").eq(0).attr('src')
+        var sourceSrc= $("#audio source").eq(0).attr('src'),
+            audiolist = $('#audio-list li'),
+            switchMp3 = function () {
+                var mp3 = audiolist.eq(Math.floor(Math.random() * audiolist.length));
+                p[0].src = mp3.data('url');
+            }
         if (sourceSrc == '' && p[0].src == ''){
-            audiolist = $('#audio-list li');
-            mp3 = audiolist.eq([Math.floor(Math.random() * audiolist.length)])
-            p[0].src = mp3.data('url')
+            switchMp3();
         }
 
         if (p.eq(0).data("autoplay") == true) {
-            p[0].play();
+            Diaspora.audioAutoPlay(p[0]);  
         }
 
         p.on({
@@ -159,12 +162,23 @@ var Diaspora = {
                 }
             },
             'ended': function() {
-                $('.icon-pause').removeClass('icon-pause').addClass('icon-play')
+                // $('.icon-pause').removeClass('icon-pause').addClass('icon-play');
+                switchMp3();
+                p[0].play();
             },
             'playing': function() {
                 $('.icon-play').removeClass('icon-play').addClass('icon-pause')
             }
         })
+    },
+    audioAutoPlay: function (audio){  
+        audio.play();
+        $('body').one('click', function (e) {
+            var target = $(e.target).attr('class') || '';
+            if (target.indexOf('icon-play') == -1) {
+                audio.play();
+            }
+        });
     },
     loading: function() {
         var w = window.innerWidth;
@@ -193,6 +207,89 @@ var Diaspora = {
         }
         id.style.left = (_width - parseInt(id.style.width)) / 2 +'px';
         id.style.top = (_height - parseInt(id.style.height)) / 2 +'px';
+    },
+    weatherOnload: function () {
+        Vshow.init(function () {
+            if ($('#preview').length) {
+                var cover = {};
+                cover.t = $('#cover');
+                cover.w = cover.t.attr('width');
+                cover.h = cover.t.attr('height');
+                ;(cover.o = function() {
+                    $('#mark').height(window.innerHeight)
+                })();
+                if (cover.t.prop('complete')) {
+                    // why setTimeout ?
+                    setTimeout(function() { cover.t.load() }, 0)
+                }
+                cover.t.on('load', function() {
+                    ;(cover.f = function() {
+                        var _w = $('#mark').width(), _h = $('#mark').height(), x, y, i, e;
+                        e = (_w >= 1000 || _h >= 1000) ? 1000 : 500;
+                        if (_w >= _h) {
+                            i = _w / e * 50;
+                            y = i;
+                            x = i * _w / _h;
+                        } else {
+                            i = _h / e * 50;
+                            x = i;
+                            y = i * _h / _w;
+                        }
+                        $('.layer').css({
+                            'width': _w + x,
+                            'height': _h + y,
+                            'marginLeft': - 0.5 * x,
+                            'marginTop': - 0.5 * y
+                        })
+                        if (!cover.w) {
+                            cover.w = cover.t.width();
+                            cover.h = cover.t.height();
+                        }
+                        Diaspora.F($('#cover')[0], cover.w, cover.h)
+                    })();
+                    
+                    $('html, body').removeClass('loading')
+                    $('#mark').parallax()
+                    /* var vibrant = new Vibrant(cover.t[0]);
+                    var swatches = vibrant.swatches()
+                    if (swatches['DarkVibrant']) {
+                        $('#vibrant polygon').css('fill', swatches['DarkVibrant'].getHex())
+                        $('#vibrant div').css('background-color', swatches['DarkVibrant'].getHex())
+                    }
+                    if (swatches['Vibrant']) {
+                        $('.icon-menu').css('color', swatches['Vibrant'].getHex())
+                    } */
+                })
+                if (!cover.t.attr('src')) {
+                    alert('Please set the post thumbnail')
+                }
+                $('#preview').css('min-height', window.innerHeight)
+                Diaspora.PS()
+                $('.pview a').addClass('pviewa')
+                var T;
+                $(window).on('resize', function() {
+                    clearTimeout(T)
+                    T = setTimeout(function() {
+                        if (!Diaspora.P() && location.href == Home) {
+                            cover.o()
+                            cover.f()
+                        }
+                        if ($('#loader').attr('class')) {
+                            Diaspora.loading()
+                        }
+                    }, 500)
+                })
+            } else {
+                $('#single').css('min-height', window.innerHeight)
+                $('html, body').removeClass('loading')
+                window.addEventListener('popstate', function(e) {
+                    if (e.state) location.href = e.state.u;
+                })
+                Diaspora.player();
+                $('.icon-icon, .image-icon').attr('href', '/')
+                $('#top').show()
+            }
+        })
     }
 };
 
@@ -200,84 +297,7 @@ $(function() {
     if (Diaspora.P()) {
         $('body').addClass('touch')
     }
-    if ($('#preview').length) {
-        var cover = {};
-        cover.t = $('#cover');
-        cover.w = cover.t.attr('width');
-        cover.h = cover.t.attr('height');
-        ;(cover.o = function() {
-            $('#mark').height(window.innerHeight)
-        })();
-        if (cover.t.prop('complete')) {
-            // why setTimeout ?
-            setTimeout(function() { cover.t.load() }, 0)
-        }
-        cover.t.on('load', function() {
-            ;(cover.f = function() {
-                var _w = $('#mark').width(), _h = $('#mark').height(), x, y, i, e;
-                e = (_w >= 1000 || _h >= 1000) ? 1000 : 500;
-                if (_w >= _h) {
-                    i = _w / e * 50;
-                    y = i;
-                    x = i * _w / _h;
-                } else {
-                    i = _h / e * 50;
-                    x = i;
-                    y = i * _h / _w;
-                }
-                $('.layer').css({
-                    'width': _w + x,
-                    'height': _h + y,
-                    'marginLeft': - 0.5 * x,
-                    'marginTop': - 0.5 * y
-                })
-                if (!cover.w) {
-                    cover.w = cover.t.width();
-                    cover.h = cover.t.height();
-                }
-                Diaspora.F($('#cover')[0], cover.w, cover.h)
-            })();
-            $('html, body').removeClass('loading')
-            $('#mark').parallax()
-            /* var vibrant = new Vibrant(cover.t[0]);
-            var swatches = vibrant.swatches()
-            if (swatches['DarkVibrant']) {
-                $('#vibrant polygon').css('fill', swatches['DarkVibrant'].getHex())
-                $('#vibrant div').css('background-color', swatches['DarkVibrant'].getHex())
-            }
-            if (swatches['Vibrant']) {
-                $('.icon-menu').css('color', swatches['Vibrant'].getHex())
-            } */
-        })
-        if (!cover.t.attr('src')) {
-            alert('Please set the post thumbnail')
-        }
-        $('#preview').css('min-height', window.innerHeight)
-        Diaspora.PS()
-        $('.pview a').addClass('pviewa')
-        var T;
-        $(window).on('resize', function() {
-            clearTimeout(T)
-            T = setTimeout(function() {
-                if (!Diaspora.P() && location.href == Home) {
-                    cover.o()
-                    cover.f()
-                }
-                if ($('#loader').attr('class')) {
-                    Diaspora.loading()
-                }
-            }, 500)
-        })
-    } else {
-        $('#single').css('min-height', window.innerHeight)
-        $('html, body').removeClass('loading')
-        window.addEventListener('popstate', function(e) {
-            if (e.state) location.href = e.state.u;
-        })
-        Diaspora.player();
-        $('.icon-icon, .image-icon').attr('href', '/')
-        $('#top').show()
-    }
+    Diaspora.weatherOnload();
     $(window).on('scroll', function() {
         if ($('.scrollbar').length && !$('.icon-images').hasClass('active')) {
             var wt = $(window).scrollTop(),
@@ -372,7 +392,7 @@ $(function() {
             // audio pause
             case (tag.indexOf('icon-pause') != -1):
                 $('#audio')[0].pause()
-                $('.icon-pause').removeClass('icon-pause').addClass('icon-play')
+                $('.icon-pause').removeClass('icon-pause').addClass('icon-play');
                 break;
             // history state
             case (tag.indexOf('cover') != -1):
@@ -408,9 +428,6 @@ $(function() {
                 $('html,body').animate({
                     scrollTop: to.offset().top - 50
                 }, 300);
-                /* $("html,body").animate({
-                  scrollTop: to.offset().top - 50
-                }, 300); */
                 return false;
                 break;
             // quick view
@@ -462,26 +479,8 @@ $(function() {
                 }
                 return false;
                 break;
-              // comment
-            case - 1 != tag.indexOf("comment"): 
-                Diaspora.loading(),
-                comment = $('#gitalk-container');
-                gitalk = new Gitalk({
-                  clientID: comment.data('ci'),
-                  clientSecret: comment.data('cs'),
-                  repo: comment.data('r'),
-                  owner: comment.data('o'),
-                  admin: comment.data('a'),
-                  id: location.pathname,
-                  distractionFreeMode: comment.data('d')
-                })
-                $(".comment").removeClass("link")
-                gitalk.render('gitalk-container')
-                Diaspora.loaded();
-                return false;
-                break;
             default:
-                return true;
+                // return true;
                 break;
         }
     })

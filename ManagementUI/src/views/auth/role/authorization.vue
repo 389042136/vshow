@@ -1,7 +1,7 @@
 <!--角色授权-->
 <template>
 	<el-dialog title="角色授权" :close-on-click-modal="false" :visible.sync="propDialogShow" width="600px" :before-close="dialogClose">
-		<el-form @submit.native.prevent :model="dialogForm" ref="dialogForm" label-width="100px">
+		<el-form @submit.native.prevent :model="dialogForm" ref="dialogForm" label-width="130px">
 			<el-form-item label="角色名称：" prop="roleName">
 				<el-input v-model.trim="dialogForm.roleName" disabled></el-input>
 			</el-form-item>

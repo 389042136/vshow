@@ -15,7 +15,7 @@ html {
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 	/* 解决IOS默认滑动很卡的情况 */
-	-webkit-overflow-scrolling: touch;
+	// -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -35,6 +35,12 @@ input {
 	resize: none;
 	border: none;
 	outline: none;
+}
+
+
+//防止段落输入的都是数字不换行
+p {
+	word-wrap:break-word; 
 }
 
 

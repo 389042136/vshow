@@ -85,14 +85,35 @@ export const formatCheck = {
 		return true; 
 	},
 
+
+	//英文 数字 空格
+	isEnglish(str) {
+		let patrn = /^[0-9a-zA-Z-\.\s]+$/; 
+		if (!patrn.test(str)) {
+			return false;  
+		}
+		return true; 
+	},
+
+	//手机号
+	// isTel(str) {
+	// 	let patrn = /^1[0-9]{10}$/;
+	// 	if(!patrn.test(str)) {
+	// 		return false;
+	// 	}
+	// 	return true;
+	// },
+
+
 	//手机号
 	isTel(str) {
-		let patrn = /^1[0-9]{10}$/;
+		let patrn = /(^\d{3,4}-\d{7,8}$)|(^1[0-9]{10}$)/;
 		if(!patrn.test(str)) {
 			return false;
 		}
 		return true;
 	},
+	
 
 	//email校验
 	isEmail(str) {
@@ -290,9 +311,10 @@ export function dateFormat(val, fmt = 'yyyy-MM-dd HH:mm') {
 export async function logout() {
 	let res = await indexFn.logout();
 	if(res.status == successCode) {
-		localStorage.removeItem('token');
+		// localStorage.removeItem('token');
 		localStorage.removeItem('activeMenu');
 		localStorage.removeItem('breadArr');
+		localStorage.removeItem('token');
 		router.push('/login');
 	}
 }

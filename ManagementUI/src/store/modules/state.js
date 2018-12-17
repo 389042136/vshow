@@ -14,9 +14,4 @@ export default {
      * 角色权限
      */
     allAuth: [],
-
-    /**
-     * 接收到断开设备
-     */
-    breakDevice: [],
 }

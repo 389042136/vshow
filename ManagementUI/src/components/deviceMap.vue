@@ -1,4 +1,4 @@
-<!--设备地图组件-->
+<!--设施地图组件-->
 <template>
 	<!-- 拖动， 缩放 -->
 	<div id="map-move-con">
@@ -6,44 +6,45 @@
 		<div class="map-container" @click.left="leftClick" @click.right.prevent="rightClick" :class="{'cursor-move': isMoveDevPos}" :style="imgStyle">
 			<img draggable="false" :src="mapUrl" :style="imgStyle">
 
-			<!-- 设备坐标 -->
+			<!-- 设施坐标 -->
 			<div class="point-con">
 				<template v-for="item in mapData">
-					<div class="ponit" :class="{unNormal: item.status == 0, normal: item.status == 1, break: item.status == 2, isMoveDevPos: isMoveDevPos && item.dvcId != dvcId}"
-						:key="item.dvcId"
-						:id="item.dvcId"
-						:data-ip="item.dvcIp" 
+					<div class="ponit" :class="{normal: item.facStatus == 0, disable: item.facStatus == 1, break: item.facStatus == 2}"
+						:key="item.facId"
+						:id="item.facId"
 						v-if="item.coordinateX"
 						:postion="`${ item.coordinateX },${ item.coordinateY }`"
 						:style="`left:${ item.coordinateX }%;top:${ item.coordinateY }%`" 
-						@click.left.stop="clickSpot(item.dvcId)"
-						@click.right.prevent.stop="clickSpot(item.dvcId)">
+						@click.left.stop="clickSpot(item.facId)"
+						@click.right.prevent.stop="clickSpot(item.facId)">
 						<el-tooltip placement="top">
-							<!-- 设备对应信息 -->
+							<!-- 设施对应信息 -->
 							<div slot="content" class="map-device-info">
 								<el-row type="flex">
 									<div>名称：</div>
-									<div>{{ item.dvcName }}</div>
+									<div>{{ item.facName }}</div>
 								</el-row>
 								<el-row type="flex">
 									<div>编号：</div>
-									<div>{{ item.dvcNo }}</div>
+									<div>{{ item.facNo }}</div>
 								</el-row>
-								<el-row type="flex" v-if="item.dvcIp">
-									<div>IP：</div>
-									<div>{{ item.dvcIp }}</div>
+								<el-row type="flex">
+									<div>类型：</div>
+									<div>{{ item.typeName }}</div>
 								</el-row>
 							</div>
-							<i class="fa fa-map-marker fa-2x"></i>
+							<div class="device-icon">
+								<img :src="item.typeIcon">
+							</div>
 						</el-tooltip>
 					</div>
 				</template>
 			</div>
 
-			<!-- 新增设备框 -->
+			<!-- 新增设施框 -->
 			<div class="addDevice-con" :style="`left: ${ addDevice.x }%;top: ${ addDevice.y }%`" v-show="addDevice.show" v-if="type">
-				<div @click="addEditDevice(1)">新增设备</div>
-				<div @click="addEditDevice(4)">绑定设备</div>
+				<div @click="addEditDevice(1)">新增设施</div>
+				<div @click="addEditDevice(4)">绑定设施</div>
 			</div>
 			
 			<!-- 操作框 -->
@@ -52,12 +53,6 @@
 					<div @click="deleteDevice()">删除</div>
 					<div @click.stop="moveDevice()">移动</div>
 					<div @click="addEditDevice(2)">编辑</div>
-				</template>
-				<template v-else>
-					<div @click="devControl(0, dvcIP)">远程控制</div>
-					<div @click="devControl(1, dvcIP)">重启</div>
-					<div @click="devControl(2, dvcIP)">关机</div>
-					<div @click="devControl(3, dvcIP)">开机</div>
 				</template>
 			</div>
 		</div>
@@ -76,11 +71,11 @@
 
 				pointObj : {},      //地图坐标
 				operation: {},      //操作弹框
-				addDevice: {},		//新增设备框
-				isMoveDevPos: 0,    //是否移动设备位置
+				addDevice: {},		//新增设施框
+				isMoveDevPos: 0,    //是否移动设施位置
 				currentObj: null,   //当前点击对象 DOM
 				dvcIP: '',			//当前点击对象 ip
-				dvcId: '',			//当前点击对象 id
+				facId: '',			//当前点击对象 id
 			}
 		},
 		methods: {
@@ -88,7 +83,7 @@
 			 * 获取地图宽高
 			 */
 			async getImg() {
-				this.imgStyle = await this.imgWidthHeight(this.mapUrl, $('.deviceList-right'));
+				this.imgStyle = await this.imgWidthHeight(this.mapUrl, $('.deviceList-right-map'));
 			},
 
 			/**
@@ -101,7 +96,11 @@
 				//加载完成执行
 				return new Promise(resolve => {
 					img.onload = () => {
-						let style = el.width() / el.height() < img.width / img.height ? 'width: 100%' : 'height: 100%';
+						/* let wh = img.width / img.height;
+						let style = el.width() / el.height() < wh ? 
+									'width:100%; height:' + el.width() * wh + 'px' :
+									'height:100%; width:' + el.height() * wh + 'px'; */
+						let style = el.width() / el.height() < img.width / img.height ? 'width:100%' : 'height:100%';
 						resolve(style);
 					}
 				});
@@ -133,7 +132,7 @@
 			},
 
 			/**
-             * 点击设备，弹框位置
+             * 点击设施，弹框位置
              * obj 点击对象的id
              */
             clickSpot(id){
@@ -147,7 +146,7 @@
 				};
 				this.addDevice.show = false;
 				this.isMoveDevPos = 0;
-				this.dvcId = id;
+				this.facId = id;
 				this.dvcIP = this.currentObj.data('ip');
 			},
 
@@ -169,13 +168,13 @@
 			},
 
 			/**
-			 * 左键: 移动设备位置
+			 * 左键: 移动设施位置
 			 */
 			async leftClick(event) {
                 if(this.isMoveDevPos){
 					let e = this.clickMap(event);
 					let params = {
-						dvcId: this.dvcId,
+						facId: this.facId,
 						coordinateX: e.x,
 						coordinateY: e.y
 					};
@@ -184,13 +183,13 @@
 					if(!res) return;
 
 					if(res.status == this.$successCode) {
-						this.$message.success('移动设备成功');
+						this.$message.success('移动设施成功');
 						this.currentObj.attr('postion', e.x + ',' + e.y).css({
 							left: e.x + '%',
 							top : e.y + '%'
 						});
 					}else {
-						this.$message.error('移动设备失败');
+						this.$message.error('移动设施失败');
 					}
 				}
 			},
@@ -208,25 +207,25 @@
 			},
 
 			/**
-			 * 删除设备指令
+			 * 删除设施指令
 			 */
 			deleteDevice(){
 				showPrompt( async () => {
-					let res = await this.service.delete([this.dvcId]);
+					let res = await this.service.delete([this.facId]);
 					if(!res) return;
 
 					if(res.status == this.$successCode) {
-						this.$message.success('删除设备成功');
+						this.$message.success('删除设施成功');
 						this.currentObj.remove();
 						this.operation.show = false;
 					}else {
-						this.$message.error('删除设备失败');
+						this.$message.error('删除设施失败');
 					}
 				}, '删除');
 			},
 
 			/**
-             * 移动设备指令
+             * 移动设施指令
              */
             moveDevice(){
                this.isMoveDevPos = 1;
@@ -245,7 +244,7 @@
 					};
 				}else{
 					let pos = this.currentObj.attr('postion').split(',');
-					data = this.mapData.find((val) => val.dvcId == this.dvcId);
+					data = this.mapData.find((val) => val.facId == this.facId);
 					data.x = pos[0];
 					data.y = pos[1];
 				}
@@ -276,6 +275,69 @@
 		}
 	}
 </script>
-<style lang="less">
+<style lang="less" scoped>
+	.device-icon {
+		width: 30px;
+		height: 30px;
+		position: relative;
+		img {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			pointer-events: none;
+			box-shadow: 0 3px 2px rgba(0, 0, 0, .6);
+		}
+		&:before {
+			content: '';
+			position: absolute;
+			width: 14px;
+			height: 14px;
+			top: -2px;
+			right: -3px;
+			border-radius: 50%;
+			animation-duration: .8s;
+			animation-iteration-count: infinite;
+			box-sizing: border-box;
+		}
+	}
 
+	.disable .device-icon:before{
+		animation-name: disable;
+		background: rgb(230, 162, 60);
+	}
+	@keyframes disable {
+		0% {
+			opacity:.2;
+			box-shadow:0 1px 2px rgba(255,255,255,.1);
+		}
+		70% {
+			opacity:.5;
+			box-shadow:0 1px 2px rgba(255,255,255,.1);
+		}
+		100% {
+			opacity:1;
+			border: 1px solid rgba(255,255,255,.6);
+			box-shadow:0 1px 10px rgba(232,169,75,1);
+		}
+	}
+
+	.break .device-icon:before{
+		animation-name: break;
+		background: red;
+	}
+	@keyframes break {
+		0% {
+			opacity:.2;
+			box-shadow:0 1px 2px rgba(255,255,255,.1);
+		}
+		70% {
+			opacity:.5;
+			box-shadow:0 1px 2px rgba(255,255,255,.1);
+		}
+		100% {
+			opacity:1;
+			border: 1px solid rgba(255,255,255,.6);
+			box-shadow:0 1px 10px rgba(255, 1, 1, 1);
+		}
+	}
 </style>

@@ -26,10 +26,16 @@ const Suggestions = r => require.ensure([], () => r(require('@/views/suggestions
 const Spotquery = r => require.ensure([], () => r(require('@/views/spotquery/spotquery.vue')));
 const SpotqueryInfo = r => require.ensure([], () => r(require('@/views/spotquery/spotqueryInfo.vue')));
 const NoticeInfo = r => require.ensure([], () => r(require('@/views/notice/noticeInfo.vue')));
+const NoticeInfoBoarding = r => require.ensure([], () => r(require('@/views/notice/noticeInfoBoarding.vue')));
+const NoticeInfoCheckin = r => require.ensure([], () => r(require('@/views/notice/noticeInfoCheckin.vue')));
+const NoticeInfoHand = r => require.ensure([], () => r(require('@/views/notice/noticeInfoHand.vue')));
+const NoticeInfoLuggage = r => require.ensure([], () => r(require('@/views/notice/noticeInfoLuggage.vue')));
+const NoticeInfoCard= r => require.ensure([], () => r(require('@/views/notice/noticeInfoCard.vue')));
 const NoticeMinute = r => require.ensure([], () => r(require('@/views/notice/noticeMinute.vue')));
 const FacilitiesQuery = r => require.ensure([], () => r(require('@/views/facilitiesQuery/facilitiesQuery.vue')));
 const TradingareaMap = r => require.ensure([], () => r(require('@/views/tradingarea/tradingareaMap.vue')));
 const WXError = r => require.ensure([], () => r(require('@/views/other/WXError.vue')));
+const Parking = r => require.ensure([], () => r(require('@/views/parking/parking.vue')));
 
 export default new Router({
 	routes: [
@@ -65,6 +71,31 @@ export default new Router({
 			path: '/noticeInfo',
 			name: 'noticeInfo',
 			component: NoticeInfo,
+		},
+		{
+			path: '/noticeInfoBoarding',
+			name: 'noticeInfoBoarding',
+			component: NoticeInfoBoarding,
+		},
+		{
+			path: '/noticeInfoCheckin',
+			name: 'noticeInfoCheckin',
+			component: NoticeInfoCheckin,
+		},
+		{
+			path: '/noticeInfoHand',
+			name: 'noticeInfoHand',
+			component: NoticeInfoHand,
+		},
+		{
+			path: '/noticeInfoLuggage',
+			name: 'noticeInfoLuggage',
+			component: NoticeInfoLuggage,
+		},
+		{
+			path: '/noticeInfoCard',
+			name: 'noticeInfoCard',
+			component: NoticeInfoCard,
 		},
 		{
 			path: '/noticeMinute',
@@ -110,6 +141,11 @@ export default new Router({
 			path: '/transportationRail',
 			name: 'transportationRail',
 			component: TransportationRail,
+		},
+		{
+			path: '/parking',
+			name: 'parking',
+			component: Parking,
 		},
 		{
 			path: '/airport',

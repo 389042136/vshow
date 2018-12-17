@@ -41,7 +41,7 @@
 				<table class="tb"  >
 					<tbody class="tb-tbody flex flex-column">                              
 						<tr v-for="(item, index) in tradingDataList" :key="index">
-							<td class="flex flex-row" @click="choice(item)">
+							<td class="flex flex-justify" @click="choice(item)">
 								<div class="tb-div-img ">
 									<img class="tb-img" :src="item.business_logo"  v-imgReactive>
 								</div>
@@ -276,8 +276,9 @@
 				overflow: hidden;
 				border-radius: 50%;
 		     	vertical-align: middle;
-					text-align: center;
+				text-align: center;
 				box-shadow: @box-shadow-icon;
+				margin-right: 0.2rem;
 				.tb-img{
 					position: absolute;
 					top:50%; 
@@ -286,15 +287,16 @@
 				}
 			}
 			.div-time{
-				flex:1;
-				padding: 0 0.24rem 0;
+				width: 52%;
+				// padding: 0 0.24rem 0;
 				.div-time-h4{
                    .tb-h4{
+					   	max-width: 2rem;
 						font-size: 0.28rem;
 						overflow: hidden;
 						text-overflow:ellipsis;
 						white-space: nowrap;
-						margin-right: 0.12rem;
+						margin-right: 0.05rem;
 					}
 					.tb-span-img{
 						height: 0.32rem;
@@ -354,9 +356,9 @@
 					border-radius: 0.08rem;
 					color: #41a1f7;
 					padding:  0 0.16rem;
-					background-color: #fff;
+					// background-color: #fff;
 					margin-right: 0.16rem;
-					border: 0.01rem solid #41a1f7;
+					border: 1px solid #41a1f7;
 					.h5-map{
 						font-size: 0.24rem;
 						line-height: 0.48rem;

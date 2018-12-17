@@ -61,13 +61,13 @@
 				</h3>
 			</div>
 			<ul class="index-part-con flex flex-wrap" >
-				<router-link tag="li" v-for="(item,index) in allFuncList" :key="index" :to="item.menuUrl">
+				<li v-for="(item,index) in allFuncList" :key="index" @click="toSubpage(item,index)">
 					<div :class="item.menuExtendOne">
 						<i class="icon-tips" v-if="item.menuImagePath=='icon-transportation'">购票</i>
                         <i class="icon-menu" :class="item.menuImagePath"></i>
                     </div>
                     <h4>{{item.menuName}}</h4>
-				</router-link>
+				</li>
 			</ul>
 		</div>
 		<div class="index-scenic index-part" v-if="scenicRecommandList&&scenicRecommandList.length">
@@ -124,6 +124,7 @@
 </template>
 
 <script>
+	import { Toast } from 'mint-ui';
 	import WeatherControl from '../components/common/weatherControl.vue';
 	import { getMainmenu, getScenicRecommandList, getBusinessRecommandList} from '../service/api';
 	import Swiper from '../../static/js/swiper.min.js';
@@ -147,7 +148,6 @@
 				getMainmenu().then(res=>{
 					this.allFuncList = [];
 					if(res && res.status==0 && res.data){
-						
 						let data = {};
 						data = res.data.filter(item=>item.menuCategoryId==1);
 						this.allFuncList = data[0].menus;
@@ -162,7 +162,7 @@
 							menuImagePath: "icon-feedback",
 							menuName: "意见反馈",
 							menuSort: null,
-							menuUrl: "/suggestions",
+							menuUrl: "/suggestions?type=1",
 							updateAccount: null,
 						})
 						
@@ -174,7 +174,6 @@
 				getScenicRecommandList().then(res=>{
 					this.scenicRecommandList = [];
 					if(res && res.status == 0 && res.data) {
-						console.log('景点',res.data)
 						this.scenicRecommandList = res.data;
 					}
 				})
@@ -184,10 +183,21 @@
 				getBusinessRecommandList().then(res=>{
 					this.businessRecommandList = [];
 					if(res && res.status == 0 && res.data && res.data.businessRecommandGroup) {
-						console.log('商圈',res)
 						this.businessRecommandList = res.data.businessRecommandGroup;
 					}
 				})
+			},
+			// 点击全部功能的菜单
+			toSubpage(data,index){
+				if(data.menuUrl == '/checkin') {
+                    Toast({
+                        message: '该功能尚在开发中，敬请期待...',
+                        position: 'middle',
+                        duration: 3000
+                    });
+                } else {
+                    this.$router.push({path: `${data.menuUrl}`})
+                }
 			},
 			// 点击景点列表item
 			toScenicInfo(data){
@@ -657,7 +667,7 @@
 					}
 				}
 				.cell-arrow {
-					width: 30%;
+					// width: 30%;
 					font-size: 0.24rem;
 					line-height: 0.66rem;
 					color: @theme-color;

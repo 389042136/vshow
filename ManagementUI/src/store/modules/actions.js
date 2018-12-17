@@ -17,7 +17,6 @@ export default {
     clearAll({ commit }) {
         commit('SET_GLOBALPARAMS', {});
         commit('SET_BREAD', []);
-        commit('SET_BREAKDEVICE', []);
     },
 }
 

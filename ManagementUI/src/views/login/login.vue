@@ -2,16 +2,16 @@
 	<div id="login">
 		<!-- 输入框 -->
 		<div class="login-box">
-			<h1>GTC后台管理系统</h1>
+			<h1>GTC银川管理平台</h1>
 			<el-form @submit.native.prevent :label-position="'left'" :model="loginForm" class="login-from" :rules="rules" ref="loginForm" label-width="0px">
 				<el-form-item label="" prop="userName" size="large">
-					<el-input type="text" prefix-icon="fa fa-user-circle-o" placeholder="请输入用户名" v-model.trim="loginForm.userName"></el-input>
+					<el-input type="text" prefix-icon="fa fa-user-circle-o" placeholder="请输入用户名" v-model.trim="loginForm.userName" maxlength="30"></el-input>
 				</el-form-item>
 				<el-form-item label="" prop="password" size="large">
 					<Password :password="loginForm.password" :icon="true" @getPassword="getPassword"></Password>
 				</el-form-item>
 				<el-form-item label="" prop="verification" ref="verification" size="large">
-					<el-input placeholder="请输验证码" prefix-icon="fa fa-code" v-model.trim="loginForm.verification" @keydown.enter.native="submit">
+					<el-input placeholder="请输验证码" prefix-icon="fa fa-code" v-model.trim="loginForm.verification" @keydown.enter.native="submit" maxlength="4">
 						<template slot="append">
 							<div @click="createCode" class="verification">
 								<SIdentify :identifyCode="loginForm.checkCode"></SIdentify>
@@ -68,7 +68,7 @@
 					callback(new Error('输入的帐号格式不正确'));
 				} else {
 					callback();
-				}
+				} 
 			};
 			//密码校验
 			let checkPass = (rule, value, callback) => {
@@ -148,7 +148,6 @@
 					this.rememberPwd = accountObj.rememberPwd;
 				}
 			},
-
 			/**
 			 * 登录
 			 */
@@ -164,8 +163,8 @@
 				if(!res) {
 					this.clear();
 					return;
-				};
-				
+				};	
+
 				if(res.status == this.$successCode) {
 					this.saveLocal(this.loginForm);
 					this.$router.push("/");
@@ -173,7 +172,6 @@
 					this.$message.error('登录失败');
 				}
 			},
-
 			/**
 			 * 本地保存数据
 			 */
@@ -190,7 +188,6 @@
 					localStorage.removeItem('accountInfo');
 				}
 			},
-
 			/**
 			 * 图片验证码
 			 */
@@ -204,28 +201,24 @@
 				}
 				this.loginForm.checkCode = code; //把code值赋给验证码
 			},
-
 			/**
 			 * 接收密码
 			 */
 			getPassword(val) {
 				this.$set(this.loginForm, 'password', val);
 			},
-
 			/**
 			 * 记住密码
 			 */
 			isRememberPwd(val) {
 				this.rememberPwd = val;
 			},
-
 			/**
 			 * 忘记密码
 			 */
 			forgetPwd() {
 				this.$message.warning('请您联系管理员重置登录密码！');
 			},
-
 			/**
 			 * 重置密码，验证码
 			 */

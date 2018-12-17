@@ -16,11 +16,11 @@ let baseRequest = async(callback) => {
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json;charset=UTF-8',
-			'Authorization': localStorage.getItem("token") || '',
+			// 'Authorization': localStorage.getItem("token") || '',
 		},
 		mode: "cors",
 		cache: "force-cache",
-		//withCredentials: true ,
+		withCredentials: true ,
 		timeout: 5000,
 	}
 	try {
@@ -28,9 +28,9 @@ let baseRequest = async(callback) => {
 		let res = response.data;
 		load.closeLoading();
 
-		//全局错误提示
-		if(errorCode[res.status]) {
-			Message.error(errorCode[res.status]);
+		// //全局错误提示
+		// if(errorCode[res.status]) {
+			// Message.error(errorCode[res.status]);
 
 			//重新登录
 			if(res.status == '2007') {
@@ -41,11 +41,10 @@ let baseRequest = async(callback) => {
 			if(res.status == '403') {
 				router.push('/');
 			}
-			return false;
-		}
+			// return false;
+		// }
 		return res;
 	} catch(error) {
-		console.log(error);
 		load.closeLoading();
 		Message.error('网络异常，请稍后再试');
 		return false;
@@ -77,9 +76,10 @@ export default {
 		url = baseUrl + url;
 		let config = {
 			headers: {
-				'Authorization': localStorage.getItem("token") || '',
+				// 'Authorization': localStorage.getItem("token") || '',
 			},
 		};
+		
 		let form = new FormData();
 		//增加多个文件
 		if(data.files) {

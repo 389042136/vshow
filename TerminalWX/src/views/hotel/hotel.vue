@@ -12,12 +12,11 @@
 					</div>
 					<div class="div-img" v-elReactive="0.63">
 						<img  v-if="item.hotel_logo_list != null && item.hotel_logo_list.indexOf('jpg') != -1" :src="item.hotel_logo_list" alt="">
-						<img  v-else src="../../../static/room/room2.jpg" alt="">
 					</div>
 					<div class="down flex flex-column">
 						<div class="down-div-t">
 							<h4 class="div-h4">{{item.hotel_name_ch}}</h4>
-							<p class="pice">
+							<p class="pice" v-if="item.the_cheapest_price">
 								¥{{item.the_cheapest_price}}<span>起</span>
 							</p>
 						</div>
@@ -109,29 +108,33 @@
 				margin-right: 0;
 			}
 			.spot-sign {
+				max-width: 100%;
+				position: absolute;
+				top: 0.4rem;
+				right: -0.3rem;
+				height: 0.36rem;
+				line-height: 0.36rem;
+				border-radius: 0.3rem;
+				padding: 0 0.46rem 0 0.46rem;
+				background: rgba(30,38,64,0.8);
+				font-size: 0.22rem;
+				// color: @gray-color;
+				color: #fff;
+				text-align: left;
+				box-sizing: border-box;
+				overflow: hidden;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+				>i {
 					position: absolute;
-					top: 0.4rem;
-					right: -0.3rem;
-					height: 0.36rem;
-					line-height: 0.36rem;
-					border-radius: 0.3rem;
-					padding: 0 0.46rem 0 0.46rem;
-					background: rgba(30,38,64,0.8);
-					font-size: 0.22rem;
-					// color: @gray-color;
-					color: #fff;
-					text-align: center;
-					box-sizing: border-box;
-					>i {
-						position: absolute;
-						top: 0.06rem;
-						left: 0.1rem;
-						width: 0.24rem;
-						height: 0.24rem;
-						background: url(../../assets/images/icon_location_36.png) no-repeat center center;
-						background-size: 100% 100%;
-					}
+					top: 0.06rem;
+					left: 0.1rem;
+					width: 0.24rem;
+					height: 0.24rem;
+					background: url(../../assets/images/icon_location_36.png) no-repeat center center;
+					background-size: 100% 100%;
 				}
+			}
 			.div-img{
 				width: 100%;
 				height: 100%;
@@ -152,7 +155,7 @@
 						line-height: 0.3rem;
 						font-weight: normal;
 						text-align: left;
-						width: 65%;
+						width: 58%;
 						overflow: hidden;
 						text-overflow:ellipsis;
 						white-space: nowrap;

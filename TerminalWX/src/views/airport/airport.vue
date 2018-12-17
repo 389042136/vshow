@@ -3,14 +3,15 @@
 		<x-header class="x-header" title="值机柜台" :left-options="{backText:'',preventGoBack:true}" @on-click-back="callback">
 		</x-header>
 		<div class="index-main airport-main">
-			<div class="btn-scale flex flex-column">
+			<!-- 缩放功能目前不支持 -->
+			<!-- <div class="btn-scale flex flex-column">
 				<div><img src="../../assets/images/icon_map_zoom_in.png" alt=""></div>
 				<div><img src="../../assets/images/icon_map_zoom_out.png" alt=""></div>
-			</div>
+			</div> -->
 			<div class="airpor-btn airport-south">
 				<h4>南值机柜台</h4>
 			</div>
-			<div class="airpor-btn airport-nouth">
+			<div class="airpor-btn airport-north">
 				<h4>北值机柜台</h4>
 			</div>
 			<div class="airpor-list">
@@ -24,7 +25,7 @@
 					</mt-cell>
 					<mt-cell 
 						class="trading-cell"
-						to="/airportInfo/nouth"
+						to="/airportInfo/north"
 	  					is-link
 	  					value="点击查看详情">
 						<div slot="title">北值机柜台</div>
@@ -106,7 +107,7 @@
 				top: 4rem;
 				left: 2rem;
 			}
-			&.airport-nouth {
+			&.airport-north {
 				background: url(../../assets/images/airport_info_pop_bg_reverse.png) no-repeat top left;
                 background-size: 100% auto;
 				top: 5rem;

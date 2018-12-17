@@ -1,21 +1,12 @@
 <template>
 	<div>
-        <x-header class="x-header" :title="param.enumName" :left-options="{backText:'',preventGoBack:true}" @on-click-back="callback">
-		
+        <x-header class="x-header" :title="dataInfo.enumName" :left-options="{backText:'',preventGoBack:true}" @on-click-back="callback">
 		</x-header>
-        <div class="menu-box flex flex-column">
-            <div class="notice-main notice-detail">
-                <div class="notice-div" >
-                    <h4>{{param.title}}：</h4>
-                    <div class="div-p ">
-                        <p class="p2">
-                            {{param.one}}<br/> 
-                            {{param.two}}<br/>
-                            {{param.three}}<br/>
-                            {{param.four}}<br/>
-                            {{param.five}}
-                        </p>
-                    </div>
+        <div class="notice-main notice-detail">
+            <div class="notice-div" >
+                <h4>{{dataInfo.title}}</h4>
+                <div class="div-p ">
+                    <p class="p2" v-html="dataInfo.content"></p>
                 </div>
             </div>
         </div>
@@ -29,40 +20,60 @@
 		data() {
 			return {
                 showChinese: true,
-                param: {},
+                dataInfo: {},
 			}
         },
         methods: {
             callback(){
-               this.$router.push({name: 'noticeInfo',params:this.param});
+                switch(this.dataInfo.enumName) {
+                    case '登机注意事项':
+                        this.$router.push({name: 'noticeInfoBoarding'}); 
+                        break;
+                    case '安检注意事项':
+                        this.$router.push({name: 'noticeInfoCheckin'}); 
+                        break;
+                    case '随身物品规定':
+                        this.$router.push({name: 'noticeInfoHand'}); 
+                        break;
+                    case '行李托运规定':
+                        this.$router.push({name: 'noticeInfoLuggage'}); 
+                        break;
+                    case '证件相关问题':
+                        this.$router.push({name: 'noticeInfoCard'}); 
+                        break;
+                } 
 			},
 		},
 		created(){
-           this.param = this.$route.query;
+            if(this.$route.params.enumName) {
+                this.dataInfo = this.$route.params;
+                localStorage.setItem('dataInfo',JSON.stringify(this.dataInfo))
+            } else {
+                this.dataInfo = JSON.parse(localStorage.getItem('dataInfo'));
+            }
+            
+            
         },
         mounted(){
 			
         },
-        watch:{
-
-        }
 	}
 </script>
 
 <style lang='less' scoped>
 .notice-main {
-	height: 100%;
+	// height: 100%;
 	width: 100%;
 	padding: 1.2rem 0.48rem 0;
 	box-sizing: border-box;
     .notice-div{
-         height: 100%;
+        //  height: 100%;
          box-sizing: border-box;
          margin-top: 0.2rem;
          border-radius: 0.24rem;
          padding-bottom: 0.24rem;
          h4{
-            height: 0.4rem;
+            min-height: 0.4rem;
             font-size: 0.32rem;
             font-weight: normal;
             color: #41a1f7;

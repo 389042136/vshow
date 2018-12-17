@@ -1,7 +1,7 @@
 <!--角色编辑、新增-->
 <template>
 	<InfoPanle :propShow="propShow" :propType="propType" @close="panleClose()" @submit="submit">
-		<el-form @submit.native.prevent :model="formData" :rules="rules" ref="formData" label-width="100px" :disabled="propType == 3">
+		<el-form @submit.native.prevent :model="formData" :rules="rules" ref="formData" label-width="130px" :disabled="propType == 3">
 			<el-form-item label="角色名称：" prop="roleName">
 				<el-input v-model.trim="formData.roleName" placeholder="请输入角色名称" maxlength="50" @keydown.enter.native="submit" clearable></el-input>
 			</el-form-item>

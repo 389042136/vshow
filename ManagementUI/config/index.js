@@ -10,17 +10,21 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-          target: 'http://192.168.11.193:8080', //源地址 
-          // target: 'http://123.57.206.226:8080', //源地址 
+          target: 'http://192.168.11.179:8080', //源地址 
+          // target: 'http://123.57.206.226:38080', //源地址 
+          // target: 'http://101.200.228.232:8081', //源地址 
           changeOrigin: true, //改变源 
           pathRewrite: { 
-              '^/api': '/display-management' //路径重写 
+              '^/api': '/mp' //路径重写  179
+              // '^/TerminalManagementServer': '/management-server' //路径重写 232
+              // '^/TerminalManagementServer': '/TerminalManagement-1.0.0' //路径重226
           }
         },
     },
     // Various Dev Server settings
-    host: '192.168.11.181', // can be overwritten by process.env.HOST
-    port: 8060, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    // host: '127.0.0.1', // can be overwritten by process.env.HOST
+    host: '192.168.11.181', 
+    port: 8065, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

@@ -1,9 +1,14 @@
 <!--区域编辑、新增-->
 <template>
 	<InfoPanle :propShow="propShow" :propType="propType" @close="panleClose()" @submit="submit">
-		<el-form @submit.native.prevent :model="formData" :rules="rules" ref="formData" label-width="100px" :disabled="propType == 3">
+		<el-form @submit.native.prevent :model="formData" :rules="rules" ref="formData" label-width="130px" :disabled="propType == 3">
 			<el-form-item label="区域名称：" prop="zoneName">
 				<el-input v-model.trim="formData.zoneName" placeholder="请输入区域名称" maxlength="50" clearable></el-input>
+			</el-form-item>
+			<el-form-item label="航站楼：" prop="termNo">
+				<el-select v-model="formData.termNo" placeholder="请选择航站楼" clearable> 
+					<el-option :label="value" :value="key" v-for="(value, key) in termNo" :key="key"></el-option>
+				</el-select>
 			</el-form-item>
 			<el-form-item label="备注：" prop="zoneDesc">
 				<el-input type="textarea" :rows="6" placeholder="请输入内容，最多100个字符" maxlength="100" v-model.trim="formData.zoneDesc"></el-input>
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex';
 	import { airBasedata } from "@/service/api";
 	import { formatCheck } from '@/utils/utils';
 	import InfoPanle from "@/components/infoPanle";
@@ -28,12 +34,18 @@
 		components: {
 			InfoPanle
 		},
+		computed: {
+			...mapState({
+				termNo: state => state.globalParams.term,
+			}),
+		},
 		props: ['panleShow', 'panleData'],
 		data() {
 			return {
 				propShow: false,
 				propType: 0,
 				formData: {},
+				termArr: [],
 				selectMap: {},
 				mapUrl: '',
 				rules: {
@@ -44,6 +56,13 @@
 							trigger: 'blur'
 						}
 					],
+					termNo: [
+						{
+							required: true,
+							message: '请选择航站楼',
+							trigger: 'change'
+						}
+					]
 				},
 			}
 		},

@@ -6,7 +6,6 @@ import router from './router'
 import store from './store/index';
 import ElementUI from 'element-ui';
 import PicturePreview from 'vue-picture-preview';
-import VueSocketio from 'vue-socket.io';
 import { successCode } from '@/utils/statusCode';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -19,8 +18,6 @@ import './style/cover.less';
  */
 Vue.use(ElementUI, { size: 'small' });
 Vue.use(PicturePreview);
-/* Vue.use(VueSocketio, socketIOUrl); */ //socketIOUrl: config.js 中定义的全局变量;
-
 /**
  * 路由拦截
  */
@@ -31,7 +28,7 @@ router.beforeEach(async(to, from, next) => {
 		if(to.path === '/login') {
 			next(false);
 		} else {
-			if(!store.getters.globalParams.is_internet) {
+			if(!store.getters.globalParams.ftp_url) {
 				await store.dispatch('get_globalparams');
 			}
 			next();

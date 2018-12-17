@@ -10,9 +10,6 @@ export const getMainmenu = () => http.get('/mainMenu');
 //获取二级菜单列表 
 export const getMenulist = (params) => http.post('/enumList',params);
 
-//获取航班查询的机场列表
-export const getAirportList = (params) => http.post('/airportList',params);
-
 //获取查询酒店列表
 export const getQueryHotelList = () =>  http.get('/queryHotelList');
 
@@ -45,12 +42,6 @@ export const getScenicRecommandList = () => http.get('/wxQueryScenicRecommandLis
 // 获取值机柜台信息
 export const getCheckInCounterList = (params) => http.post('/wxQueryCheckInCounterList',params);
 
-//查询国内机场和国内热门机场
-export const getDomesticAirport = () => http.get('/wxQueryDomesticAirport');
-
-// 查询国际机场和国际热门机场
-export const getInternationalAirport = () => http.get('/wxQueryInternationalAirport');
-
 // 意见反馈
 export const addFeedback = params => http.post('/insertOneAdvice', params);
 
@@ -67,4 +58,24 @@ export const facilities = {
 
     delete: params => http.post('/leadPointDelete', params)
 };
+
+// 关于航班查询
+export const flights = {
+    //查询国内机场和国内热门机场
+    getDomesticAirport: () => http.get('/wxQueryDomesticAirport'),
+
+    // 查询国际机场和国际热门机场
+    getInternationalAirport: () => http.get('/wxQueryInternationalAirport'),
+
+    //根据城市三字码查询航班列表
+    getFlightListByCity: (params) => http.post('/wxQueryFlightListByCity',params),
+
+    //根据航班号查询航班列表
+    getFlightListByFlightNo: (params) => http.post('/wxQueryFlightListByFlightNo',params),
+
+    //根据航班id获取航班详情
+    getFlightInfo: (params) => http.post('/wxQueryFlightInfoById',params),
+}
+
+
 

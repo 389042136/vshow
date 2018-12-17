@@ -63,7 +63,7 @@
 
 <script>
     import { Tab, TabItem } from '../../components/vux/tab/index';
-    import { getDomesticAirport, getInternationalAirport } from '../../service/api';
+    import { flights } from '../../service/api';
 	export default {
 		components: {
             Tab,
@@ -95,7 +95,7 @@
             },
             // 国内机场数据
             getAirportListD(){
-                getDomesticAirport().then(res=>{
+                flights.getDomesticAirport().then(res=>{
                     this.menudatasD = {};
                     if(res.status == 0 && res.data){
                         this.menudatasD.HotDomesticAirport = res.data.HotDomesticAirport;
@@ -123,7 +123,7 @@
             },
             // 国际机场数据
             getAirportListI(){
-                getInternationalAirport().then(res=>{
+                flights.getInternationalAirport().then(res=>{
                     this.menudatasI = {};
                     if(res.status == 0 && res.data){
                         this.menudatasI.HotInternationalAirport = res.data.HotInternationalAirport;

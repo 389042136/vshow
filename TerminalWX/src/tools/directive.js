@@ -1,3 +1,4 @@
+import AlloyFinger from '../../static/js/alloy_finger.min.js';
 export default (Vue) => {
     Vue.directive('imgReactive',{
         bind:function(el,binding,vnode){
@@ -57,6 +58,67 @@ export default (Vue) => {
             window.onresize = function(){
                 el.style.height = el.offsetWidth * binding.expression + 'px';
             }
+        },
+        updated: function(el,binding,vnode){
+            
+        },
+    })
+
+
+
+    //图片缩放
+    Vue.directive('elZoom',{
+        bind:function(el,binding,vnode){
+        },
+        inserted: function(el,binding,vnode){
+            let imgWidth = el.offsetWidth;
+            let imgHeight = el.offsetHeight;
+            let scaleVal = 1;
+            let isZoom = false;
+            let imgleft = el.offsetLeft;
+            let imgtop = el.offsetTop;
+
+            function computeLeftTop(x, y, scale){
+                imgleft = x - imgWidth * scale * (x - imgleft) / el.offsetWidth;
+                imgtop = y - imgHeight * scale * (y - imgtop) / el.offsetHeight;
+            };
+
+            /**
+             * 设置样式
+             */
+            function setStyle(opteion = {}) {
+                let css = {
+                    width: imgWidth * (opteion.scale || scaleVal),
+                    height: imgHeight * (opteion.scale || scaleVal),
+        			left: imgleft + 'px',
+                    top: imgtop + 'px',
+                }
+
+                    el.style.width = css.width + 'px';
+                    el.style.height = css.height + 'px';
+                    el.style.left = css.left;
+                    el.style.top = css.top;
+            };
+            
+            let currentScale = scaleVal;
+            let alloyFinger = new AlloyFinger(el,{})
+            alloyFinger.on('pinch',ev => {
+                isZoom = true;
+                currentScale = scaleVal * ev.zoom;
+                let x = (ev.touches[0].pageX + ev.touches[1].pageX) / 2,
+                y = (ev.touches[0].pageY + ev.touches[1].pageY) / 2;
+                computeLeftTop(x, y, currentScale);
+                setStyle({ scale: currentScale });
+            })
+
+            alloyFinger.on('multipointEnd', () => {
+                if(isZoom) {
+                    isZoom = false;
+                    scaleVal = 1;
+                }  
+            });
+
+            
         },
         updated: function(el,binding,vnode){
             

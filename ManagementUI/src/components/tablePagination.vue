@@ -17,7 +17,7 @@
 		</el-row>
 		<div class="multipleTable-con">
 			<el-table class="multipleTable" :data="tableData.returnDatas"  @selection-change="selectionChange" ref="multipleTable" stripe highlight-current-row>
-				<el-table-column
+				<el-table-column style="text-overflow: clip;"
 					v-if="tableCol.hasSelect"
 					type="selection"
 					width="44">
@@ -26,10 +26,11 @@
 					type="index" 
 					label="序号" 
 					:width="tableCol.indexWidth || 50"
-					:index="indexMethod"
 					show-overflow-tooltip
+					:index="indexMethod"
 					align="center">
 				</el-table-column>
+				<!-- :index="indexMethod" -->
 				<el-table-column 
 					v-if="tableCol.operationWidth"
 					label="操作" 
@@ -75,6 +76,10 @@
 			return {
 				
 			}
+		},
+		mounted(){
+			// console.log('tableCol：：：',this.tableCol);
+			// console.log('tableData:::',this.tableData,);
 		},
 		methods: {
 			/**

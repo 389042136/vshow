@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div id="fullScreenCon" ref="fullScreenCon" v-if="maskImg" @click="maskImg = false">
+			<img :src="fullScreenImg" alt="">
+		</div>
 		 <x-header class="x-header" :title="spotInfoData.scenic_name_ch" :left-options="{backText:'',
 		 preventGoBack:true}" @on-click-back="callback">
 		</x-header>
@@ -10,14 +13,11 @@
 				</div>
 				<p class="introduce-h5">景区图片</p>
 			</div>
-			<div class="img-div">
-				<div class="div-border">
-					<div class="swiper-slide" v-for="(item, index) in spotList" :key="index">
-						<img class="swiper-slide-img" :src="item" v-imgReactive :onerror="defaultImg">
-					</div>
+			<div class="img-div flex flex-wrap">
+				<div class="img-item" v-for="(item, index) in spotList" :key="index">
+					<img :src="item" :onerror="defaultImg" v-imgReactive @click="toFullScreen(item)">
 				</div>
 			</div>
-			
 			<div class="room flex flex-left">
 				<div class="room-div-img">
 				  <img class="room-img" src="../../assets/images/icon_title_detail.png">
@@ -67,6 +67,8 @@
 				spotInfoData:[],
 				arrPhone:[],
 				defaultImg: 'this.src="' + require('../../assets/images/default_img_hotel.png') + '"',
+				maskImg: false,
+				fullScreenImg: "",
 			}
 		},
 		methods: {
@@ -75,7 +77,7 @@
 		
 			},
 			callback(){
-					this.$router.back(-1);
+				this.$router.back(-1);
 			},
 			toNoticeInfo(data,index){
 				this.$router.push({path: '/hotelInfo', params: data});
@@ -94,18 +96,39 @@
 					}
 				})
 			},
+			//全屏
+			toFullScreen(src) {
+				this.fullScreenImg = src;
+				this.maskImg = true;
+				
+			}
 		},
 		created(){
 			this.params = this.$route.params;
 			this.init();
 		},
 		mounted(){
-		 },
+			
+		},
 	}
 </script>
 
 <style lang='less' scoped>
 @import '../../style/definition.less';
+#fullScreenCon {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 99;
+	img {
+		position: absolute;
+		width: 100%;
+		height: auto;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
 .index-header {
 	width: 100%;
 	height: 1rem;
@@ -143,41 +166,32 @@
 	}
 	.img-div{
 		width: 100%;
-		height: 1.8rem;
 	    margin-top: 0.24rem;
-		border-radius: 0.16rem;
 		overflow: hidden;
 		box-sizing: border-box;
-		.div-border{
-			height: 2rem;
-		   display: flex;
-		   overflow-x: auto;
-			overflow-y: hidden;
-		   justify-content: flex-start;
-		   .swiper-slide{
-				flex: 0 0 2.07rem;
-				height: 1.6rem;
-				display: inline-block;
-				margin:0 0.16rem 0 0;
-				border-radius: 0.16rem;
-				overflow: hidden;
-				position: relative;
-				.swiper-slide-img{
-					// height: 100%;
-					// width:100%;
-					// border-radius:0.16rem; 
-					display: block;
-	                position: absolute;
-	                top: 50%;
-	                left: 50%;
-	                transform: translate(-50%,-50%);
-				}
+		.img-item {
+			flex: 0 0 31.6%;
+			height: 1.6rem;
+			margin-right: 2.4%;
+			margin-bottom: 0.16rem;
+			border-radius: 0.16rem;
+			overflow: hidden;
+			position: relative;
+			&:nth-child(3n) {
+				margin-right: 0;
+			}
+			img {
+				display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
 			}
 		}
     }
     .room{
 		width: 6.5rem;
-		margin-top: 0.4rem;
+		margin-top: 0.24rem;
 		margin-bottom: 0.1rem;
 		.room-div-img{
 			height: 0.32rem;
@@ -214,11 +228,12 @@
 			}
 			.info-address{
 				font-size: 0.24rem;
-				margin-left: 0.12rem;
+				line-height: 0.4rem;
 				font-weight: normal;
-				overflow: hidden;
-				text-overflow:ellipsis;
-				white-space: nowrap;
+				margin-left: 0.12rem;
+				// overflow: hidden;
+				// text-overflow:ellipsis;
+				// white-space: nowrap;
 				color:#828999;
 			}
 		}

@@ -1,7 +1,7 @@
 <!--修改密码-->
 <template>
 	<el-dialog title="修改密码" :close-on-click-modal="false" :visible.sync="dialogShow" width="600px" :before-close="dialogClose">
-		<el-form @submit.native.prevent :model="dialogForm" :rules="rules" ref="dialogForm" label-width="100px">
+		<el-form @submit.native.prevent :model="dialogForm" :rules="rules" ref="dialogForm" label-width="130px">
 			<el-form-item label="原密码" prop="oldPass">
 				<Password :password="dialogForm.oldPass" @getPassword="getOldPass" placeholder="请输入原密码" @keydown.enter.native="submit"></Password>
 			</el-form-item>

@@ -15,7 +15,7 @@
                             </div>
                             <div class="item-text">
                                 <div class="item_icon" v-if="item.checkin_airline_iata">
-                                    <img :src="require('../../assets/images/airline/M_'+ item.checkin_airline_iata.toUpperCase()+'.png')" alt="">
+                                    <img :src="item.checkin_airline_iata" alt="" @error="errorImg(item)">
                                
                                 </div>
                                 <p  v-for="(child,childIndex) in item.checkin_info_of_counter.split(',')" :key="childIndex">
@@ -53,11 +53,25 @@
                     // model: 1,
                 }).then(res=>{
 					this.countDataList = [];
-					console.log('柜台',res);
 					if(res && res.status == 0 && res.data) {
-						this.countDataList = res.data;
+                        this.countDataList = res.data;
+                        this.countDataList.forEach(item=>{
+                            if(item.checkin_airline_iata.length) {
+                                item.checkin_airline_iata = '../../static/img/airline/M_' + item.checkin_airline_iata.toUpperCase()+'.png';
+                            }   
+                            
+                        })
 					}
 				})
+            },
+            /**
+             * 去空格，转小写
+             */
+            trim(str) {
+                return allTrim(str);
+            },
+            errorImg(data){
+                data.checkin_airline_iata = null
             }
 
 			
@@ -69,7 +83,7 @@
                     this.title = '南值机区柜台分布';
                     this.position = 'S';
                     break;
-                case 'nouth':
+                case 'north':
                     this.title = '北值机区柜台分布';
                     this.position = 'N';
                     break;

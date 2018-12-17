@@ -13,16 +13,18 @@ module.exports = {
           // target: 'http://pert.enjoyskyline.com', //源地址 
           // target: 'http://192.168.11.179:8080', //源地址 
           target: 'http://123.57.206.226:38080', //源地址
+          // target: 'http://101.200.228.232:8081', //源地址 
           changeOrigin: true, //改变源 
           pathRewrite: {
-              '^/TerminalServer': '/TerminalManagement-1.0.0' //路径重写  226
-              // '^/TerminalServer': '/api'  //路径重写
+              // '^/TerminalServer': '/management-server' //路径重写  232
+              '^/TerminalServer': '/TerminalManagement-1.0.0' //路径重写 226
+              // '^/api': '/api'  //路径重写
           }
         }, 
     },
     // Various Dev Server settings
     // host: '192.168.1.120', // can be overwritten by process.env.HOST
-    host: '192.168.11.181',
+    host: '192.168.11.202',
     port: 8063, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

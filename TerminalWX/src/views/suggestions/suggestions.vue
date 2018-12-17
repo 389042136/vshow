@@ -11,7 +11,7 @@
 				<div>联系方式</div>
 				<x-input placeholder="请输入您的手机号/QQ号" v-model="tel" :show-clear="false"></x-input>
 			</div>
-			<div class="addImg">
+			<div class="addImg" v-show="!wechatError">
 				<div>添加图片</div>
 				<div class="img-container">
 					<div v-for="(value, key) in imgData" :key="key" @click="previewImage(key)">
@@ -50,7 +50,8 @@
 				introduceCon: '',
 				tel: '',
 				imgData: {},
-				imgMaxMum: 3
+				imgMaxMum: 3,
+				wechatError: false
 			}
 		},
 		computed: {
@@ -60,10 +61,15 @@
 		},
 		methods: {
             callback(){
-                this.$router.back(-1);
+				 if (window.history.length <= 1) {
+					this.$router.push({path:'/'});
+				} else {
+					this.$router.back(-1);
+				}
 			},
 
 			init(){
+				this.$wechat.error(error => this.wechatError = true);
 				//this.$wechat.ready(() => this.downloadImage('6VRw6i_EcDFRmiLIZzoLT4ED_7_SO6VTwmbD-qcQbJM4Ys3Vl0HypRa5JmpCLn2S'))
 			},
 
@@ -179,7 +185,7 @@
 				for(let i in this.imgData) {
 					mediaId.push(this.imgData[i].serverId);
 				}
-				let sourceType = this.$route.query ? 1 : 0,
+				let sourceType = this.$route.query.type ? 0 : 1,
 					parmas = {
 						content: this.introduceCon,
 						contact: this.tel,

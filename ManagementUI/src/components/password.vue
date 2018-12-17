@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-input :type="passType ? 'password' : 'text' " :prefix-icon="icon ? 'fa fa-key' : ''" :placeholder="placeholder" v-model.trim="psw"></el-input>
+        <el-input :type="passType ? 'password' : 'text' " :prefix-icon="icon ? 'fa fa-key' : ''" :placeholder="placeholder" v-model.trim="psw" maxlength="30"></el-input>
         <i class="fa showPass" :class="passType ? 'fa-eye-slash' : 'fa-eye'" @mousedown="show()" @mouseup="hide()" @mouseout="hide()"></i>
     </div>
 </template>

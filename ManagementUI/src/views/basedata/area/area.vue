@@ -57,6 +57,12 @@
 							minWidth: '100',
 						},
 						{
+							prop: 'termNo',
+							label: '航站楼',
+							width: '80',
+							align: 'center'
+						},
+						{
 							prop: 'mapName',
 							label: '地图名称',
 							minWidth: '100',

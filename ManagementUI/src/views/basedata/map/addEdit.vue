@@ -1,7 +1,7 @@
 <!--地图编辑，新增-->
 <template>
 	<InfoPanle :propShow="propShow" :propType="propType" @close="panleClose()" @submit="submit" class="uploadMap">
-		<el-form @submit.native.prevent :model="formData" :rules="rules" ref="formData" label-width="100px" :disabled="propType == 3">
+		<el-form @submit.native.prevent :model="formData" :rules="rules" ref="formData" label-width="130px" :disabled="propType == 3">
 			<el-form-item label="地图名称：" prop="mapName">
 				<el-input v-model.trim="formData.mapName" placeholder="请输入地图名称" clearable maxlength="30"></el-input>
 			</el-form-item>

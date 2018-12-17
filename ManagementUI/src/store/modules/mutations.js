@@ -16,10 +16,5 @@ export default {
      * 角色权限
      */
     ['SET_ALLAUTH']: (state, obj) =>  state.allAuth = obj,
-
-    /**
-     * 接收到断开设备
-     */
-    ['SET_BREAKDEVICE']: (state, obj) =>  state.breakDevice = obj,
 }
 

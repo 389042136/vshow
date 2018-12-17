@@ -3,7 +3,7 @@ title: 前端如何高效的与后端协作开发
 date: 2018-06-01 10:12:32
 tags: [前后分离, 前端工程化, 单页面应用]
 # mp3: http://huxiaodo.com/files/music/01.m4a
-cover: http://f.huxiaodo.com/image/blog/92be55a16b511810f87a06dcea1a4f7e.jpg
+cover: http://f.huxiaodo.com/image/blog/1c379ba17f76ab1038deb5367c8225d9.jpg
 ---
 
 ###  1、前后端分离

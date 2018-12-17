@@ -41,6 +41,7 @@ let v_touch = {
         this.$ele = $(ele);
         this.default = Object.assign(this.default, opt);
         this.alloyFinger = new AlloyFinger(this.$ele[0], {});
+        
         this.width = this.$ele.width();
         this.height = this.$ele.height();
     },

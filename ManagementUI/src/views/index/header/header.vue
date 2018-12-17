@@ -4,12 +4,15 @@
 		<!-- this header context -->
 		<el-row type="flex" justify="space-between">
 			<el-col :span="12" class="nav-notice flex-a-center">
-				<i class="fa fa-fire" aria-hidden="true"></i>银川GTC后台管理系统测试 ing...
+				<i class="fa fa-fire" aria-hidden="true"></i>GTC银川后台管理系统
 			</el-col>
 			<el-col :span="12" class="flex-j-right flex-a-center">
 				<div class="nav-location flex-a-center">
 					<i class="fa fa-globe"></i>当前位置：
 				</div>
+				<!-- <el-breadcrumb separator-class="el-icon-arrow-right" class="c-bread font-bold">
+					<el-breadcrumb-item v-for="(item, index) in breadArr" :key="index">{{ item }}</el-breadcrumb-item>
+				</el-breadcrumb> -->
 				<el-breadcrumb separator-class="el-icon-arrow-right" class="c-bread font-bold">
 					<el-breadcrumb-item v-for="(item, index) in breadArr" :key="index">{{ item }}</el-breadcrumb-item>
 				</el-breadcrumb>
@@ -57,6 +60,7 @@
 				if(!arr || arr.length == 0) {
 					arr = ['首页'];
 				}
+
 				this.SET_BREAD(arr);
 			},
 

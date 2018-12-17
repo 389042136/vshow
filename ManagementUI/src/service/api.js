@@ -28,6 +28,79 @@ export const menuAside = {
 };
 
 /**
+ * 景点管理
+ */
+export const scenicManagement = {
+
+    //查询景点
+    getScenicList: param => http.post('/mpSelectScenicListByPage',param),
+    
+    //查询景点下拉框
+    getSelectScenicList: () => http.get('/mpSelectScenicList?scenicNameCh='),
+
+    //删除景点
+    deleteOneScenic: param => http.post('/mpDeleteOneScenic',param),
+
+    //增加景点
+    insertScenic: param => http.uploadFile('/mpInsertOneScenic', param),
+
+    //编辑景点
+    updateScenic: param => http.uploadFile('/mpUpdateOneScenic', param),
+
+};
+/**
+ * 商家管理
+ */
+export const businessManagement = {
+
+    //查询商家
+    getBusinessList: param => http.post('/mpSelectBusinessListByPage',param),
+
+     //查询商家下拉框
+    getSelectBusinessList: () => http.get('/mpSelectBusinessList?businessNameCh='),
+
+    //查询商家区域
+    getBusinessArea: () => http.get('/mpSelectBusinessArea'),
+
+    //查询商家类型
+    getBusinessType: () => http.get('/mpSelectBusinessType'),
+
+    //删除商家
+    deleteOneBusiness: param => http.post('/mpDeleteOneBusiness',param),
+
+    //增加商家
+    insertBusiness: param => http.uploadFile('/mpInsertOneBusiness', param),
+
+    //编辑商家
+    updateBusiness: param => http.uploadFile('/mpUpdateOneBusiness', param),
+
+};
+
+/**
+ * 柜台管理
+ */
+export const checkManagement = {
+
+    //查询柜台
+    getCheckInList: param => http.post('/mpSelectCheckInListByPage',param),
+    
+    // 查询已有柜台模式
+    getCheckModel: () => http.get('/mpSelectDirectionAndModel'),
+
+   // 查询已有柜台模式
+   updateCheckInModel: (param) => http.get('/mpUpdateCheckInModel?checkinModelCounter='+param),
+
+    //删除柜台
+    deleteOneCheckIn: param => http.post('/mpDeleteOneCheckIn',param),
+
+    //新增柜台
+    insertCheckIn: param => http.post('/mpInsertOneCheckIn', param),
+
+    //编辑柜台
+    updateCheckIn: param => http.post('/mpUpdateOneCheckIn', param),
+
+};
+/**
  * 权限管理
  */
 export const authManagement = {
@@ -79,30 +152,6 @@ export const authManagement = {
 
 
 /**
- * 机场信息管理
- */
-export const airportInfo = {
-
-    /**
-     * 查看机场信息
-     */
-    getInfo: () => http.post('/airport'),
-
-    //上传logo
-    uploadLogo: param => http.uploadFile('/modifyLogo', param),
-
-
-    /**
-     * 机场配置参数
-     */
-    getConfig: () => http.post('/config'),
-
-    //修改参数
-    setConfig: param => http.put('/config', param),
-};
-
-
-/**
  * 基础数据管理
  */
 export const airBasedata = {
@@ -141,137 +190,100 @@ export const airBasedata = {
 };
 
 /**
- * 显示设备管理
+ * 应急设施管理
  */
 export const device = {
+    /**
+     * 设施类型管理
+     */
+    getTypeList: param => http.post('/facilitiesTypeList', param),
+
+    //新增设施类型
+    addType: param => http.uploadFile('/facilitiesTypeInsert', param),
+
+    //修改设施类型
+    updateTypee: param => http.uploadFile('/facilitiesTypeUpdate', param),
+
+    //删除设施类型
+    deleteType: param => http.post('/facilitiesTypeDelete', param),
+
+
 
     /**
-     * 设备管理
+     * 设施管理
      */
-    getGroup: () => http.get('/deviceGroupTree'),
 
-    //新增分组
-    addGroup: param => http.post('/deviceGroup', param),
+    //获取设施列表
+    getDeviceList: param => http.post('/facilitiesList', param),
 
-    //修改分组
-    updateGroup: param => http.put('/deviceGroup', param),
+    //新增设施
+    addDevice: param => http.post('/facilitiesInsert', param),
 
-    //删除分组
-    deleteGroup: param => http.post('/deviceGroupDelete', param),
+    //修改设施
+    updateDevice: param => http.post('/facilitiesUpdate', param),
 
-
-    //获取设备列表
-    getDeviceList: param => http.post('/deviceList', param),
-
-    //获取设备详情
-    getDeviceInfo: param => http.get('/device', param),
-
-    //新增设备
-    addDevice: param => http.post('/device', param),
-
-    //修改设备
-    updateDevice: param => http.put('/device', param),
-
-    //删除设备
-    deleteDevice: param => http.post('/deviceDelete', param),
-
-    //获取初始化数据
-    getSelect: () => http.get('/deviceSelect'),
-
-
-    //获取区域地图
-    getZoneMap: param => http.get('/zone', param),
+    //删除设施
+    deleteDevice: param => http.post('/facilitiesDelete', param),
 };
+
 
 /**
- * 设备显示控制管理
+ * 酒店管理
  */
-export const displayControlManagement = {
-    /**
-     * 获取设备树
-     */
-    getDeviceTree: () => http.get('/deviceTree'),
+export const hotel = {
 
     /**
-     * 自由文本管理
+     * 酒店管理
      */
-    queryFreeTexts: param => http.post('/freeText/queryDatas', param),
+    // 获取酒店分页列表
+    getHotelList: params => http.post('/mpSelectHotelListByPage', params),
 
-    //新增
-    addFreeText: param => http.post('/freeText/save', param),
+    //获取所有的酒店信息
+    getAllHotelDatas: () => http.get('/mpSelectHotelList?hotelNameCh='),
 
-    //获取单条
-    getFreeText: param => http.post('/freeText/getInfo', param),
+    // 新增酒店
+    addHotel: params => http.uploadFile('/mpInsertOneHotel', params),
 
-    //修改
-    updateFreeText: param => http.post('/freeText/update', param),
+    // 修改酒店
+    updateHotel: params => http.uploadFile('/mpUpdateOneHotel', params),
 
-    //删除
-    deleteFreeText: param => http.post('/freeText/delete', param),
+    // 删除酒店
+    deleteHotel: params => http.get('/mpDeleteOneHotel?hotelId=' + params),
 
     /**
-     * 显示页面控制
+     * 酒店管理
      */
-    getShowPageList: param => http.post('/deviceStaticPageList', param),
+    // 获取客房分页列表
+    getRoomList: params => http.post('/mpSelectRoomListByPage', params),
 
-    /**
-     * 静态资源
-     */
-    getStaticFiles: param => http.post('/staticPageList', param),
+    // 新增客房
+    addRoom: params => http.uploadFile('/mpInsertOneRoom', params),
 
-    //删除
-    deleteStaticFile: param => http.post('/staticPageDelete', param),
+    // 修改客房
+    updateRoom: params => http.uploadFile('/mpUpdateOneRoom', params),
 
-    //新增
-    addStatciFile: param => http.uploadFile('/staticPage', param),
+    // 删除客房
+    deleteRoom: params => http.post('/mpDeleteOneRoom', params),
 
-    //修改
-    updateStatciFile: param => http.uploadFile('/staticPage', param, 0),
+    // 查询客房设施类型
+    getAllRoomDevs: () => http.get('/mpSelectTypeOfRoomDev'),
 
-    /**
-     * 自定义页面
-     */
-    getDIYPage: param => http.post('/customPageList', param),
+}
 
-    //删除
-    deleteDIYPage: param => http.post('/customPageDelete', param),
-};
 
 /**
- * 显示设备监控
+ * 留言板管理
  */
-export const deviceMonitor = {
+export const advice = {
 
-    /**
-     * 地图监控
-     */
-    getDevice: param => http.post('/monitor/findAll', param),
+    // 带查询的留言板分页列表
+    getAdviceList: params => http.post('/mpSelectAdviceForDateByPage', params),
 
-    //重启
-    restart: param => http.post('/computer/restart', param),
+    // 删除留言
+    deleteAdvice: params => http.post('/mpDeleteOneAdvice', params),
 
-    //关机
-    colse: param => http.post('/computer/colse', param),
+    //获取留言详情
+    getAdviceInfo: params => http.get('/queryAdviceInfo?id=' + params),
 
-    //开机
-    open: param => http.post('/computer/open', param),
+}
 
-    //亮度
-    setLight: param => http.post('/computer/brightness', param),
-};
-
-/**
- * 日志管理
- */
-export const logManagement = {
-
-    /**
-     * 登录日志
-     */
-    loginLog: param => http.post('/logLoginList', param),
-
-    /**
-     * 操作日志
-     */
-    operationlog: param => http.post('/logList', param),
-};
