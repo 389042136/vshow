@@ -4,11 +4,11 @@
 
 # Site
 title: Vshow | Dom
-subtitle:
-description:
+subtitle: Mishow | Dom
+description: vshow博客
 keywords: vshow
 author: Hu Xiaodo
-email:  vshow@huxiaodo.com
+email: vshow@huxiaodo.com
 language: zh-CN
 timezone:
 
@@ -60,7 +60,7 @@ category_map:
 tag_map: 2
 
 port: 4000 #端口号
-server_ip: localhost #IP 地址
+server_ip: 127.0.0.1 #IP 地址
 
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date

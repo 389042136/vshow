@@ -78,12 +78,13 @@ var Vshow = {
                 }, 800);
                 return false;
             }
-        })
+        });
+        
         $('.btn-down').click(function () {
             scrollObj.animate({
                 scrollTop: window.innerHeight
             }, 800);
-        })
+        });
     },
 
     /**
