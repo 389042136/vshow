@@ -1,8 +1,0 @@
-<%
-    page.posts.sort("date", "desc").each(function(post, i){
-    if (post.top) {
-        return true;
-    }
-%>
-<%- partial('post/item', {post: post}) %>
-<% }) %>
